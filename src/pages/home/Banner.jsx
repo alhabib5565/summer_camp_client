@@ -41,7 +41,7 @@ export default function Banner() {
                             <h2 className="text-2xl text-white md:text-4xl font-bold">
                                 Discover The <span className="tex-2xl md:text-5xl bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text text-transparent">Hero Within You</span>
                             </h2>
-                            <button class="bg-purple-700 mx-auto fixed hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full transition duration-300  hover:-translate-y-1">
+                            <button className="bg-purple-700 mx-auto fixed hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full transition duration-300  hover:-translate-y-1">
                                 enroll now
                             </button>
                         </div>
@@ -74,7 +74,7 @@ export default function Banner() {
                             <h2 className="text-2xl text-white md:text-4xl font-bold">
                                 Discover The <span className="tex-2xl md:text-5xl bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text text-transparent">Hero Within You</span>
                             </h2>
-                            <button class="bg-purple-700 mx-auto fixed hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full transition duration-300  hover:-translate-y-1">
+                            <button className="bg-purple-700 mx-auto fixed hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full transition duration-300  hover:-translate-y-1">
                                 enroll now
                             </button>
                         </div>
