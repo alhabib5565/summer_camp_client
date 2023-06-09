@@ -50,7 +50,14 @@ const Navbar = () => {
         </li>
 
         {
-            user ? <li><button className='my-button ' onClick={handleLogout}>logout</button></li>
+            user ? <>
+                <button className='my-button ' onClick={handleLogout}>logout</button>
+                <div className="avatar">
+                    <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img src={user.photoURL} />
+                    </div>
+                </div>
+            </>
                 : <li className='hover:text-slate-400'>
                     <NavLink
                         to='/login'
@@ -84,7 +91,7 @@ const Navbar = () => {
                         {navitem}
                     </ul>
                 </div>
-               
+
             </div>
         </div>
     );

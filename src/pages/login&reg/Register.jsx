@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
 import GoogleLogin from '../../components/GoogleLogin';
 
 const Register = () => {
-        
-    const { userCreate, profileUpdate} = useContext(AuthContext)
+
+    const { userCreate, profileUpdate } = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         console.log(data)
@@ -23,30 +23,31 @@ const Register = () => {
         }
         console.log(data?.email, password)
         userCreate(data?.email, password)
-        .then(result => {
-            console.log(result.user)
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Create Your Accout Successfully',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              profileUpdate(data.name, data.photo)
-              then(() => {})
-              .catch(error => {
+            .then(result => {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Create Your Accout Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                profileUpdate(data.name, data.photo)
+                    .then(() => {
+                        console.log(result.user)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            })
+            .catch(error => {
                 console.log(error)
-              })
-        })
-        .catch(error => {
-            console.log(error)
-            Swal.fire({
-                title: 'Error!',
-                text: `${error?.message}`,
-                icon: 'error',
-                confirmButtonText: 'Cool'
-              })
-        })
+                Swal.fire({
+                    title: 'Error!',
+                    text: `${error?.message}`,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            })
     };
 
     return (
