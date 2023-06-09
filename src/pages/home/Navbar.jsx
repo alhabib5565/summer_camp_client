@@ -53,8 +53,8 @@ const Navbar = () => {
             user ? <>
                 <button className='my-button ' onClick={handleLogout}>logout</button>
                 <div className="avatar">
-                    <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        <img src={user.photoURL} />
+                    <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 hover:scale-105 duration-100">
+                        <img title={user.displayName} src={user.photoURL} />
                     </div>
                 </div>
             </>
