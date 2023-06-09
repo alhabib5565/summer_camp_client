@@ -8,6 +8,9 @@ import UserHome from "../dashboard/user/UserHome";
 import SelectedClass from "../dashboard/user/SelectedClass";
 import Payment from "../dashboard/user/Payment";
 import EnroledClass from "../dashboard/user/EnroledClass";
+import AdminHome from "../dashboard/admin/AdminHome";
+import ManageUser from "../dashboard/admin/ManageUser";
+import ManageClass from "../dashboard/admin/manageClass";
 
 
 export const routes = createBrowserRouter([
@@ -28,7 +31,11 @@ export const routes = createBrowserRouter([
             { path: 'userHome', element: <UserHome></UserHome> },
             { path: 'selectedClass', element: <SelectedClass></SelectedClass>},
             {path: 'payment', element: <Payment></Payment>},
-            {path: 'enrolled', element: <EnroledClass></EnroledClass>}
+            {path: 'enrolled', element: <EnroledClass></EnroledClass>},
+            //admin related
+            {path: 'adminHome', element: <AdminHome></AdminHome>},
+            {path: 'manageUser', element: <ManageUser></ManageUser>},
+            {path: 'manageClass', element: <ManageClass></ManageClass>}
         ]
     }
 ])

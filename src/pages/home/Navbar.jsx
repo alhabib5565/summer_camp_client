@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
-
+    const [regularUser, setRegularUser] = useState(false)
+    const [admin, setAdmin] = useState(true)
+    const [instructor, setInstructor] = useState(false)
     const handleLogout = () => {
         logoutUser()
             .then(() => {
@@ -49,16 +51,44 @@ const Navbar = () => {
             </NavLink>
         </li>
 
-        <li className='hover:text-slate-400'>
-            <NavLink
-                to='/dashboard'
-                className={({ isActive }) =>
-                    isActive ? "text-slate-300" : ""
-                }
-            >
-                dashboard
-            </NavLink>
-        </li>
+        {
+            regularUser && <li className='hover:text-slate-400'>
+                <NavLink
+                    to='/dashboard/userHome'
+                    className={({ isActive }) =>
+                        isActive ? "text-slate-300" : ""
+                    }
+                >
+                    dashboard
+                </NavLink>
+            </li>
+        }
+
+        {
+            instructor && <li className='hover:text-slate-400'>
+                <NavLink
+                    to='/dashboard/instructorHome'
+                    className={({ isActive }) =>
+                        isActive ? "text-slate-300" : ""
+                    }
+                >
+                    dashboard
+                </NavLink>
+            </li>
+        }
+
+        {
+            admin && <li className='hover:text-slate-400'>
+                <NavLink
+                    to='/dashboard/adminHome'
+                    className={({ isActive }) =>
+                        isActive ? "text-slate-300" : ""
+                    }
+                >
+                    dashboard
+                </NavLink>
+            </li>
+        }
 
         {
             user ? <>

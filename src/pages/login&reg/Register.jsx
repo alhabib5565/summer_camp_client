@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 // toast
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,11 +9,11 @@ import Swal from 'sweetalert2';
 import GoogleLogin from '../../components/GoogleLogin';
 
 const Register = () => {
-
+    const navigate = useNavigate()
     const { userCreate, profileUpdate } = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(data)
+        // console.log(data)
         const confimPass = data.ConfimPass
         const password = data.password
         if (confimPass !== password) {
@@ -24,16 +24,33 @@ const Register = () => {
         console.log(data?.email, password)
         userCreate(data?.email, password)
             .then(result => {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Create Your Accout Successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                console.log(result.user)
+
                 profileUpdate(data.name, data.photo)
                     .then(() => {
-                        console.log(result.user)
+                        // console.log(result.user)
+                        const savaUserData = { name: data.name, email: data.email, photo: data.photo }
+                        fetch('http://localhost:5000/createUser', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(savaUserData)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                if (data.insertedId) {
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'Create Your Accout Successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                }
+                                navigate('/login')
+                            })
                     })
                     .catch(error => {
                         console.log(error)

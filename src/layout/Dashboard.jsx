@@ -3,8 +3,10 @@ import { NavLink, Outlet } from "react-router-dom";
 import { HiOutlineMenuAlt1 } from 'react-icons/hi'
 import UserNavItem from '../dashboard/user/UserNavItem';
 import { FaHome } from 'react-icons/fa';
+import AdminNavItem from '../dashboard/admin/AdminNavItem';
 const Dashboard = () => {
-  const [users, setUser] = useState(true)
+  const [users, setUser] = useState(false)
+  const[admin, setAdmin] = useState(true)
   return (
     <>
       <div className="drawer lg:drawer-open">
@@ -20,6 +22,9 @@ const Dashboard = () => {
             {/* Sidebar content here */}
               {
                 users && <UserNavItem></UserNavItem>
+              }
+              {
+                admin && <AdminNavItem></AdminNavItem>
               }
             <div className='divider'></div>
 
