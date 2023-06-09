@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { FaGoogle } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 // toast
@@ -10,7 +9,8 @@ import Swal from 'sweetalert2';
 import GoogleLogin from '../../components/GoogleLogin';
 
 const Register = () => {
-    const { userCreate } = useContext(AuthContext)
+        
+    const { userCreate, profileUpdate} = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         console.log(data)
@@ -32,6 +32,11 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500
               })
+              profileUpdate(data.name, data.photo)
+              then(() => {})
+              .catch(error => {
+                console.log(error)
+              })
         })
         .catch(error => {
             console.log(error)
@@ -42,7 +47,6 @@ const Register = () => {
                 confirmButtonText: 'Cool'
               })
         })
-        console.log('same email', data)
     };
 
     return (
@@ -96,7 +100,7 @@ const Register = () => {
                     </div>
 
                     <div>
-                        <input type="submit" className="my-signInBtn" value='Sign in' />
+                        <input type="submit" className="my-signInBtn" value='Register' />
                     </div>
 
                     <div>

@@ -1,21 +1,20 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import {FaGoogle} from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 import GoogleLogin from '../../components/GoogleLogin';
 import { AuthContext } from '../../provider/AuthProvider';
+import Swal from 'sweetalert2';
 const Login = () => {
     const {loginUser} = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(data)
         loginUser(data.email, data.password)
          .then(result => {
             console.log(result.user)
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                title: 'Create Your Accout Successfully',
+                title: 'Login Your Accout Successfully',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -29,7 +28,6 @@ const Login = () => {
                 confirmButtonText: 'Cool'
               })
         })
-        console.log('same email', data)
     };
 
 
@@ -74,7 +72,7 @@ const Login = () => {
                     </div>
 
                     <div>
-                    <input type="submit" className="my-signInBtn" value='Sign in'/>
+                    <input type="submit" className="my-signInBtn" value='login'/>
                        
                     </div>
 

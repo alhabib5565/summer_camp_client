@@ -1,43 +1,68 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
+    const { logoutUser, user } = useContext(AuthContext)
+
+    const handleLogout = () => {
+        logoutUser()
+            .then(() => {
+                Swal.fire(
+                    'Good job!',
+                    'logOut your account ',
+                    'success'
+                )
+            })
+            .catch(error => {
+                console.log(error)
+                Swal.fire({
+                    title: 'Error!',
+                    text: `${error.message}`,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            })
+    }
 
     const navitem = <>
-        <li>
+        <li className='hover:text-slate-400'>
             <NavLink
                 to='/'
                 className={({ isActive }) =>
-                    isActive ? "text-purple-300 bg-purple-600" : ""
+                    isActive ? "text-slate-300" : ""
                 }
             >
                 home
             </NavLink>
         </li>
-       
-        <li>
-            <NavLink
-                to='/login'
-                className={({ isActive }) =>
-                    isActive ? "text-purple-300 bg-purple-600" : ""
-                }
-            >
-                login
-            </NavLink>
-        </li>
-       
-        <li>
+
+        <li className='hover:text-slate-400'>
             <NavLink
                 to='/register'
                 className={({ isActive }) =>
-                    isActive ? "text-purple-300 bg-purple-600" : ""
+                    isActive ? "text-slate-300" : ""
                 }
             >
-                registers
+                register
             </NavLink>
         </li>
-       
-        <li><a>da 3</a></li>
+
+        {
+            user ? <li><button className='my-button ' onClick={handleLogout}>logout</button></li>
+                : <li className='hover:text-slate-400'>
+                    <NavLink
+                        to='/login'
+                        className={({ isActive }) =>
+                            isActive ? "text-slate-300" : ""
+                        }
+                    >
+                        login
+                    </NavLink>
+                </li>
+
+        }
     </>
 
     return (
@@ -55,13 +80,11 @@ const Navbar = () => {
                     <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu uppercase menu-horizontal px-2">
+                    <ul className="items-center gap-5 uppercase menu-horizontal px-2">
                         {navitem}
                     </ul>
                 </div>
-                <div className="navbar-end">
-                    <a className="btn">Button</a>
-                </div>
+               
             </div>
         </div>
     );
