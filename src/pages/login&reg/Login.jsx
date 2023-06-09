@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import {FaGoogle} from 'react-icons/fa'
 import { Link } from 'react-router-dom';
+import GoogleLogin from '../../components/GoogleLogin';
+import { AuthContext } from '../../provider/AuthProvider';
 const Login = () => {
+    const {loginUser} = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => {
         console.log(data)
+        loginUser(data.email, data.password)
+         .then(result => {
+            console.log(result.user)
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Create Your Accout Successfully',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        })
+        .catch(error => {
+            console.log(error)
+            Swal.fire({
+                title: 'Error!',
+                text: `${error?.message}`,
+                icon: 'error',
+                confirmButtonText: 'Cool'
+              })
+        })
+        console.log('same email', data)
     };
+
 
     return (
         <div className="min-h-[calc(100vh-68px)] flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
@@ -54,9 +79,7 @@ const Login = () => {
                     </div>
 
                     <div>
-                        <button type="button" className="my-googleBtn">
-                           <FaGoogle></FaGoogle> Sign in with Google
-                        </button>
+                      <GoogleLogin></GoogleLogin>
                     </div>
                 </form>
             </div>
