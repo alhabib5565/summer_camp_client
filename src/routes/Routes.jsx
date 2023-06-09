@@ -4,6 +4,10 @@ import Home from "../pages/home/Home";
 import Login from "../pages/login&reg/Login";
 import Register from "../pages/login&reg/Register";
 import Dashboard from "../layout/Dashboard";
+import UserHome from "../dashboard/user/UserHome";
+import SelectedClass from "../dashboard/user/SelectedClass";
+import Payment from "../dashboard/user/Payment";
+import EnroledClass from "../dashboard/user/EnroledClass";
 
 
 export const routes = createBrowserRouter([
@@ -11,13 +15,20 @@ export const routes = createBrowserRouter([
         path: '/',
         element: <Layout></Layout>,
         children: [
-            {path: '/', element: <Home></Home>},
-            {path: '/login', element: <Login></Login>},
-            {path: '/register', element: <Register></Register>}
+            { path: '/', element: <Home></Home> },
+            { path: '/login', element: <Login></Login> },
+            { path: '/register', element: <Register></Register> }
         ]
     },
     {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>
+        element: <Dashboard></Dashboard>,
+        children: [
+            // user related
+            { path: 'userHome', element: <UserHome></UserHome> },
+            { path: 'selectedClass', element: <SelectedClass></SelectedClass>},
+            {path: 'payment', element: <Payment></Payment>},
+            {path: 'enrolled', element: <EnroledClass></EnroledClass>}
+        ]
     }
 ])

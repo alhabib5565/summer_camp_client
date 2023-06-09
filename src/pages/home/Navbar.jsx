@@ -49,6 +49,17 @@ const Navbar = () => {
             </NavLink>
         </li>
 
+        <li className='hover:text-slate-400'>
+            <NavLink
+                to='/dashboard'
+                className={({ isActive }) =>
+                    isActive ? "text-slate-300" : ""
+                }
+            >
+                dashboard
+            </NavLink>
+        </li>
+
         {
             user ? <>
                 <button className='my-button ' onClick={handleLogout}>logout</button>
