@@ -12,6 +12,7 @@ import AdminHome from "../dashboard/admin/AdminHome";
 import ManageUser from "../dashboard/admin/ManageUser";
 import ManageClass from "../dashboard/admin/manageClass";
 import AddClass from "../dashboard/instructors/AddClass";
+import MyClass from "../dashboard/instructors/MyClass";
 
 
 export const routes = createBrowserRouter([
@@ -38,7 +39,8 @@ export const routes = createBrowserRouter([
             {path: 'manageUser', element: <ManageUser></ManageUser>},
             {path: 'manageClass', element: <ManageClass></ManageClass>},
             //instructors related route
-            {path: 'addClass', element: <AddClass></AddClass>}
+            {path: 'addClass', element: <AddClass></AddClass>},
+            {path: 'myClass', element: <MyClass></MyClass>}
         ]
     }
 ])

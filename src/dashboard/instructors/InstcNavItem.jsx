@@ -10,6 +10,12 @@ const InstcNavItem = () => {
                 </NavLink>
             </li>
    
+             <li>
+                <NavLink to='/dashboard/myClass' className={({ isActive }) => isActive ? "text-purple-800" : ""}>
+                    My Class
+                </NavLink>
+            </li>
+   
         </>
     );
 };

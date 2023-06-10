@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const AddClass = () => {
     const {user} = useContext(AuthContext)
