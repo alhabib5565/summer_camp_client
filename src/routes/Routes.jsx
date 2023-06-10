@@ -11,6 +11,7 @@ import EnroledClass from "../dashboard/user/EnroledClass";
 import AdminHome from "../dashboard/admin/AdminHome";
 import ManageUser from "../dashboard/admin/ManageUser";
 import ManageClass from "../dashboard/admin/manageClass";
+import AddClass from "../dashboard/instructors/AddClass";
 
 
 export const routes = createBrowserRouter([
@@ -35,7 +36,9 @@ export const routes = createBrowserRouter([
             //admin related
             {path: 'adminHome', element: <AdminHome></AdminHome>},
             {path: 'manageUser', element: <ManageUser></ManageUser>},
-            {path: 'manageClass', element: <ManageClass></ManageClass>}
+            {path: 'manageClass', element: <ManageClass></ManageClass>},
+            //instructors related route
+            {path: 'addClass', element: <AddClass></AddClass>}
         ]
     }
 ])

@@ -29,7 +29,7 @@ const Register = () => {
                 profileUpdate(data.name, data.photo)
                     .then(() => {
                         // console.log(result.user)
-                        const savaUserData = { name: data.name, email: data.email, photo: data.photo }
+                        const savaUserData = { name: data.name, email: data.email, photo: data.photo , role: 'student'}
                         fetch('http://localhost:5000/createUser', {
                             method: 'POST',
                             headers: {

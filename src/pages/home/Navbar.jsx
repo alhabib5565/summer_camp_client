@@ -6,8 +6,8 @@ import Swal from 'sweetalert2';
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
     const [regularUser, setRegularUser] = useState(false)
-    const [admin, setAdmin] = useState(true)
-    const [instructor, setInstructor] = useState(false)
+    const [admin, setAdmin] = useState(false)
+    const [instructor, setInstructor] = useState(true)
     const handleLogout = () => {
         logoutUser()
             .then(() => {
@@ -67,7 +67,7 @@ const Navbar = () => {
         {
             instructor && <li className='hover:text-slate-400'>
                 <NavLink
-                    to='/dashboard/instructorHome'
+                    to='/dashboard/addClass'
                     className={({ isActive }) =>
                         isActive ? "text-slate-300" : ""
                     }
