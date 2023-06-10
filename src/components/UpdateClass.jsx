@@ -1,38 +1,41 @@
 import React, { useContext } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../provider/AuthProvider';
-import Swal from 'sweetalert2';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const AddClass = () => {
+const UpdateClass = () => {
+    const navigate = useNavigate()
+    // const id = params.
+    const {id} = useParams()
     const {user} = useContext(AuthContext)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const onSubmit =(data) =>{
         console.log(data)
-        const {className, email,instructorName, photo, price, sets} = data
-        const savaClass = {className, email, instructorName, photo, price, sets, status:"pending"}
-        fetch('http://localhost:5000/saveClass', {
-            method: 'POST',
+        const {className, photo, price, sets} = data
+        const updateClas = {className, photo, price, sets}
+
+        fetch(`http://localhost:5000/updateClas/${id}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(savaClass)
+            body: JSON.stringify(updateClas)
         })
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            if(data.insertedId){
+            if(data.modifiedCount > 0){
                 Swal.fire(
-                    'Good job!',
-                    'class added successfully',
+                    'Deleted!',
+                    ' deleted a Class.',
                     'success'
                   )
+                  navigate('/dashboard/myClass')
             }
         })
-    };
-
+    }
     return (
         <div className='max-w-3xl mx-auto p-4 lg-p-0'>
-            add a class
             <form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label htmlFor="clasName" className="block text-purple-900 font-bold mb-2">
@@ -40,7 +43,7 @@ const AddClass = () => {
                     </label>
                     <input
                         type="text"
-                        {...register('className', {required:true})} placeholder='class name'
+                        {...register('className', { required: true })} placeholder='class name'
                         className="border border-purple-400 px-3 py-2 w-full rounded-md"
                     />
                 </div>
@@ -66,10 +69,10 @@ const AddClass = () => {
                             className="border border-purple-400 px-3 py-2 w-full rounded-md"
                         />
                     </div>
-                    
+
                     <div className='w-full'>
                         <label htmlFor="sets" className="block text-purple-900 font-bold mb-2">
-                           Available Sets
+                            Available Sets
                         </label>
                         <input
                             type="number"
@@ -87,14 +90,14 @@ const AddClass = () => {
                         <input
                             defaultValue={user?.email}
                             type="email"
-                            {...register('email')} 
+                            {...register('email')}
                             className="border border-purple-400 px-3 py-2 w-full rounded-md"
                         />
                     </div>
 
                     <div className='w-full'>
                         <label htmlFor="name" className="block text-purple-900 font-bold mb-2">
-                           Instructor Name
+                            Instructor Name
                         </label>
                         <input
                             defaultValue={user?.displayName}
@@ -106,10 +109,10 @@ const AddClass = () => {
                 </div>
 
                 {/* Add more form fields here */}
-                <input  type="submit" className='my-signInBtn' value='Add A Class' />
+                <input type="submit" className='my-signInBtn' value='Add A Class' />
             </form>
         </div>
     );
 };
 
-export default AddClass;
+export default UpdateClass;

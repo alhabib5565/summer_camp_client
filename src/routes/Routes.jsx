@@ -13,6 +13,8 @@ import ManageUser from "../dashboard/admin/ManageUser";
 import ManageClass from "../dashboard/admin/manageClass";
 import AddClass from "../dashboard/instructors/AddClass";
 import MyClass from "../dashboard/instructors/MyClass";
+import UpdateClass from "../components/UpdateClass";
+import Instructors from "../pages/allinstructor/Instructors";
 
 
 export const routes = createBrowserRouter([
@@ -22,7 +24,8 @@ export const routes = createBrowserRouter([
         children: [
             { path: '/', element: <Home></Home> },
             { path: '/login', element: <Login></Login> },
-            { path: '/register', element: <Register></Register> }
+            { path: '/register', element: <Register></Register> },
+            {path: '/instructor', element: <Instructors></Instructors>}
         ]
     },
     {
@@ -40,7 +43,8 @@ export const routes = createBrowserRouter([
             {path: 'manageClass', element: <ManageClass></ManageClass>},
             //instructors related route
             {path: 'addClass', element: <AddClass></AddClass>},
-            {path: 'myClass', element: <MyClass></MyClass>}
+            {path: 'myClass', element: <MyClass></MyClass>},
+            {path: 'updateClass/:id', element: <UpdateClass></UpdateClass>}
         ]
     }
 ])

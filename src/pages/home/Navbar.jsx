@@ -51,6 +51,17 @@ const Navbar = () => {
             </NavLink>
         </li>
 
+        <li className='hover:text-slate-400'>
+            <NavLink
+                to='/instructor'
+                className={({ isActive }) =>
+                    isActive ? "text-slate-300" : ""
+                }
+            >
+                instructor
+            </NavLink>
+        </li>
+
         {
             regularUser && <li className='hover:text-slate-400'>
                 <NavLink

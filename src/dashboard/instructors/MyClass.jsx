@@ -2,15 +2,26 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import { FaTrashAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 const MyClass = () => {
-    const [classes, setClasses] = useState([])
-    const { user } = useContext(AuthContext)
-    useEffect(() => {
-        fetch(`http://localhost:5000/class/${user?.email}`)
-            .then(res => res.json())
-            .then(data => setClasses(data))
-    }, [])
+    // const [classes, setClasses] = useState([])
+    const { user , loading} = useContext(AuthContext)
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/class/${user?.email}`)
+    //         .then(res => res.json())
+    //         .then(data => setClasses(data))
+    // }, [])
     
+    const {data: classes=[], isLoading, refetch} = useQuery({
+        queryKey: ['class', user?.email],
+        enabled: !loading,
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/class/${user?.email}`)
+            return res.json()
+        }
+    })
+
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -28,13 +39,13 @@ const MyClass = () => {
                  .then(res => res.json())
                  .then(data => {
                     console.log(data)
-                    if(deletedCount > 0 ){
-
+                    if(data.deletedCount > 0 ){
                           Swal.fire(
                             'Deleted!',
-                            'Your file has been deleted.',
+                            ' deleted a Class.',
                             'success'
                           )
+                          refetch()
                     }
                  })
             }
@@ -44,7 +55,7 @@ const MyClass = () => {
 
     return (
         <div className='max-w-3xl mx-auto mt-12'>
-            <h2 className='text-2xl font-medium'>Hi! <span className='text-purple-500 font-bold'>{user.displayName}</span></h2>
+            <h2 className='text-2xl font-medium'>Hi! <span className='text-purple-500 font-bold'>{user?.displayName}</span></h2>
             <div className="overflow-x-auto">
                 <table className="table">
                     <thead>
@@ -58,7 +69,7 @@ const MyClass = () => {
                     </thead>
                     <tbody>
                         {
-                            classes.map((clas, index) => <tr>
+                            classes.map((clas, index) => <tr key={index}>
                                 <td>
                                     {index + 1}
                                 </td>
@@ -74,7 +85,7 @@ const MyClass = () => {
                                 </td>
                                 <td>{clas?.status}</td>
                                 <td className='flex items-center gap-4 '>
-                                    <button className='btn btn-ghost btn-sm text-white hover:text-gray-700 bg-purple-500'> update</button>
+                                    <Link to={`/dashboard/updateClass/${clas._id}`}><button className='btn btn-ghost btn-sm text-white hover:text-gray-700 bg-purple-500'> update</button></Link>
                                     <button onClick={() => handleDelete(clas._id)} title='delete' className="btn bg-red-500 text-white duration-500 hover:text-gray-700 rounded-full">
                                         <FaTrashAlt className='text-lg'></FaTrashAlt>
                                     </button>
