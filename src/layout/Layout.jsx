@@ -4,10 +4,10 @@ import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
     return (
-        <div>
+        <>
             <Navbar></Navbar>
-            <Outlet></Outlet>
-        </div>
+           <div className='max-w-7xl mx-auto p-4'><Outlet></Outlet></div>
+        </>
     );
 };
 

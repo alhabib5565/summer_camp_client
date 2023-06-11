@@ -63,8 +63,19 @@ const Navbar = () => {
             </NavLink>
         </li>
 
-       {/*  {
-            regularUser && <li className='hover:text-slate-400'>
+        <li className='hover:text-slate-400'>
+            <NavLink
+                to='/allClass'
+                className={({ isActive }) =>
+                    isActive ? "text-slate-300" : ""
+                }
+            >
+                all class
+            </NavLink>
+        </li>
+
+        {
+            !isInstructor && !isAdmin && <li className='hover:text-slate-400'>
                 <NavLink
                     to='/dashboard/userHome'
                     className={({ isActive }) =>
@@ -74,7 +85,7 @@ const Navbar = () => {
                     dashboard
                 </NavLink>
             </li>
-        } */}
+        }
 
         {
             isInstructor && <li className='hover:text-slate-400'>
@@ -143,6 +154,9 @@ const Navbar = () => {
                     <ul className="items-center gap-5 uppercase menu-horizontal px-2">
                         {navitem}
                     </ul>
+                </div>
+                <div className='navbar-end'>
+                    {user && <p>{user.displayName}</p>}
                 </div>
 
             </div>

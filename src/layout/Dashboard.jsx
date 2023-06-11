@@ -5,10 +5,11 @@ import UserNavItem from '../dashboard/user/UserNavItem';
 import { FaHome } from 'react-icons/fa';
 import AdminNavItem from '../dashboard/admin/AdminNavItem';
 import InstcNavItem from '../dashboard/instructors/InstcNavItem';
+import useAdmin from '../hooks/useAdmin';
+import useInstructor from '../hooks/useInstructor';
 const Dashboard = () => {
-  const [users, setUser] = useState(false)
-  const[admin, setAdmin] = useState(false)
-  const [instructor, setInstructor] = useState(true)
+  const [isAdmin] = useAdmin()
+  const [isInstructor] = useInstructor()
   return (
     <>
       <div className="drawer lg:drawer-open">
@@ -23,13 +24,13 @@ const Dashboard = () => {
           <ul className="menu p-4 w-80 h-full bg-purple-400 text-lg text-white">
             {/* Sidebar content here */}
               {
-                users && <UserNavItem></UserNavItem>
+                !isAdmin && !isInstructor && <UserNavItem></UserNavItem>
               }
               {
-                admin && <AdminNavItem></AdminNavItem>
+                isAdmin && <AdminNavItem></AdminNavItem>
               }
               {
-                instructor && <InstcNavItem></InstcNavItem>
+                isInstructor && <InstcNavItem></InstcNavItem>
               }
             <div className='divider'></div>
 

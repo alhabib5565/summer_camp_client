@@ -17,6 +17,7 @@ import UpdateClass from "../components/UpdateClass";
 import Instructors from "../pages/allinstructor/Instructors";
 import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
+import Classes from "../pages/AllClass/Classes";
 
 
 export const routes = createBrowserRouter([
@@ -27,7 +28,8 @@ export const routes = createBrowserRouter([
             { path: '/', element: <Home></Home> },
             { path: '/login', element: <Login></Login> },
             { path: '/register', element: <Register></Register> },
-            {path: '/instructor', element: <Instructors></Instructors>}
+            {path: '/instructor', element: <Instructors></Instructors>},
+            {path: 'allClass', element: <Classes></Classes>},
         ]
     },
     {
@@ -44,7 +46,7 @@ export const routes = createBrowserRouter([
             {path: 'manageUser', element: <AdminRoute> <ManageUser></ManageUser></AdminRoute>},
             {path: 'manageClass', element: <AdminRoute><ManageClass></ManageClass></AdminRoute>},
             //instructors related route
-            // {path: 'addClass', element: <AddClass></AddClass>},
+            {path: 'addClass', element: <AddClass></AddClass>},
             {path: 'myClass', element: <InstructorRoute><MyClass></MyClass></InstructorRoute>},
             {path: 'updateClass/:id', element: <UpdateClass></UpdateClass>}
         ]
