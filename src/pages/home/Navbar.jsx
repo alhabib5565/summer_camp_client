@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import useAdmin from '../../hooks/useAdmin';
+import useInstructor from '../../hooks/useInstructor';
 
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
-    const [regularUser, setRegularUser] = useState(false)
-    const [admin, setAdmin] = useState(false)
-    const [instructor, setInstructor] = useState(true)
+    const [isAdmin] = useAdmin()
+    const [isInstructor] = useInstructor()
     const handleLogout = () => {
         logoutUser()
             .then(() => {
@@ -62,7 +63,7 @@ const Navbar = () => {
             </NavLink>
         </li>
 
-        {
+       {/*  {
             regularUser && <li className='hover:text-slate-400'>
                 <NavLink
                     to='/dashboard/userHome'
@@ -73,10 +74,10 @@ const Navbar = () => {
                     dashboard
                 </NavLink>
             </li>
-        }
+        } */}
 
         {
-            instructor && <li className='hover:text-slate-400'>
+            isInstructor && <li className='hover:text-slate-400'>
                 <NavLink
                     to='/dashboard/myClass'
                     className={({ isActive }) =>
@@ -89,7 +90,7 @@ const Navbar = () => {
         }
 
         {
-            admin && <li className='hover:text-slate-400'>
+            isAdmin && <li className='hover:text-slate-400'>
                 <NavLink
                     to='/dashboard/adminHome'
                     className={({ isActive }) =>

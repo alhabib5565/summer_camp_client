@@ -11,9 +11,11 @@ import EnroledClass from "../dashboard/user/EnroledClass";
 import AdminHome from "../dashboard/admin/AdminHome";
 import ManageUser from "../dashboard/admin/ManageUser";
 import ManageClass from "../dashboard/admin/manageClass";
+import AddClass from "../dashboard/instructors/AddClass";
 import MyClass from "../dashboard/instructors/MyClass";
 import UpdateClass from "../components/UpdateClass";
 import Instructors from "../pages/allinstructor/Instructors";
+import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
 
 
@@ -38,12 +40,12 @@ export const routes = createBrowserRouter([
             {path: 'payment', element: <Payment></Payment>},
             {path: 'enrolled', element: <EnroledClass></EnroledClass>},
             //admin related
-            {path: 'adminHome', element: <AdminHome></AdminHome>},
-            {path: 'manageUser', element: <ManageUser></ManageUser>},
-            {path: 'manageClass', element: <ManageClass></ManageClass>},
+            {path: 'adminHome', element: <AdminRoute><AdminHome></AdminHome></AdminRoute>},
+            {path: 'manageUser', element: <AdminRoute> <ManageUser></ManageUser></AdminRoute>},
+            {path: 'manageClass', element: <AdminRoute><ManageClass></ManageClass></AdminRoute>},
             //instructors related route
             // {path: 'addClass', element: <AddClass></AddClass>},
-            {path: 'myClass', element: <AdminRoute><MyClass></MyClass></AdminRoute>},
+            {path: 'myClass', element: <InstructorRoute><MyClass></MyClass></InstructorRoute>},
             {path: 'updateClass/:id', element: <UpdateClass></UpdateClass>}
         ]
     }

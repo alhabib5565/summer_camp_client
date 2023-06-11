@@ -4,7 +4,7 @@ import { app } from '../firebase/firebase.config';
 
 export const AuthContext = createContext()
 const auth = getAuth(app)
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
     const [loading, setLoding] = useState(true)
@@ -13,15 +13,15 @@ const AuthProvider = ({children}) => {
         setLoding(true)
         return signInWithPopup(auth, googleProvider)
     }
-   
+
     const userCreate = (email, password) => {
         setLoding(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const profileUpdate =(name, photo) => {
+    const profileUpdate = (name, photo) => {
         return updateProfile(auth.currentUser, {
-            displayName:name, photoURL: photo
+            displayName: name, photoURL: photo
         })
     }
 
@@ -37,25 +37,27 @@ const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
-            console.log(currentUser)
-            setLoding(false)
-            if(currentUser) {
+
+            if (currentUser) {
                 fetch('http://localhost:5000/ganarate_jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify({email:currentUser.email})
+                    body: JSON.stringify({ email: currentUser.email })
                 })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    localStorage.setItem('jwt_token', data?.token)
-                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        localStorage.setItem('jwt_token', data?.token)
+                        setUser(currentUser)
+                        console.log(currentUser)
+                        setLoding(false)
+                    })
             }
-            else{
+            else {
                 localStorage.removeItem('jwt_token')
+                setLoding(false)
             }
         })
         return () => {
