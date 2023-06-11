@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Bars } from  'react-loader-spinner'
+import { Bars } from 'react-loader-spinner'
 import { Navigate, useLocation } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
@@ -8,15 +8,17 @@ const PrivateRoutes = ({ children }) => {
     const location = useLocation();
 
     if (loading) {
-        return <Bars
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="bars-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-        />;
+        return <div className="flex justify-center items-center">
+            <Bars
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="bars-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+            />;
+        </div>
     }
 
     if (user) {

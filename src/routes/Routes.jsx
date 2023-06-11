@@ -11,10 +11,10 @@ import EnroledClass from "../dashboard/user/EnroledClass";
 import AdminHome from "../dashboard/admin/AdminHome";
 import ManageUser from "../dashboard/admin/ManageUser";
 import ManageClass from "../dashboard/admin/manageClass";
-import AddClass from "../dashboard/instructors/AddClass";
 import MyClass from "../dashboard/instructors/MyClass";
 import UpdateClass from "../components/UpdateClass";
 import Instructors from "../pages/allinstructor/Instructors";
+import AdminRoute from "./AdminRoute";
 
 
 export const routes = createBrowserRouter([
@@ -42,8 +42,8 @@ export const routes = createBrowserRouter([
             {path: 'manageUser', element: <ManageUser></ManageUser>},
             {path: 'manageClass', element: <ManageClass></ManageClass>},
             //instructors related route
-            {path: 'addClass', element: <AddClass></AddClass>},
-            {path: 'myClass', element: <MyClass></MyClass>},
+            // {path: 'addClass', element: <AddClass></AddClass>},
+            {path: 'myClass', element: <AdminRoute><MyClass></MyClass></AdminRoute>},
             {path: 'updateClass/:id', element: <UpdateClass></UpdateClass>}
         ]
     }

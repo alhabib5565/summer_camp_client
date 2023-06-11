@@ -38,7 +38,25 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
+            console.log(currentUser)
             setLoding(false)
+            if(currentUser) {
+                fetch('http://localhost:5000/ganarate_jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({email:currentUser.email})
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    localStorage.setItem('jwt_token', data?.token)
+                })
+            }
+            else{
+                localStorage.removeItem('jwt_token')
+            }
         })
         return () => {
             return unsubscribe()

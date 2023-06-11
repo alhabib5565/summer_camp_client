@@ -12,12 +12,16 @@ const MyClass = () => {
     //         .then(res => res.json())
     //         .then(data => setClasses(data))
     // }, [])
-    
+    const token = localStorage.getItem('jwt_token')
     const {data: classes=[], isLoading, refetch} = useQuery({
         queryKey: ['class', user?.email],
         enabled: !loading,
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/class/${user?.email}`)
+            const res = await fetch(`http://localhost:5000/class/${user?.email}`, {
+                headers: {
+                    authrization: `bearer ${token}`
+                }
+            })
             return res.json()
         }
     })

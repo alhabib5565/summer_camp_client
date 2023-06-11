@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateClass = () => {
     const navigate = useNavigate()
@@ -26,8 +27,8 @@ const UpdateClass = () => {
             console.log(data)
             if(data.modifiedCount > 0){
                 Swal.fire(
-                    'Deleted!',
-                    ' deleted a Class.',
+                    'Updated!',
+                    ' update a Class.',
                     'success'
                   )
                   navigate('/dashboard/myClass')

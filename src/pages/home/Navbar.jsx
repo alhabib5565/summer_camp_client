@@ -78,7 +78,7 @@ const Navbar = () => {
         {
             instructor && <li className='hover:text-slate-400'>
                 <NavLink
-                    to='/dashboard/addClass'
+                    to='/dashboard/myClass'
                     className={({ isActive }) =>
                         isActive ? "text-slate-300" : ""
                     }
