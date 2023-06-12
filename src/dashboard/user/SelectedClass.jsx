@@ -4,7 +4,7 @@ const SelectedClass = () => {
     const { user } = useContext(AuthContext)
     console.log(user)
     useEffect(() => {
-        fetch(`http://localhost:5000/mySelectClass?email=${user?.email}`)
+        fetch(`https://12-assignment-server.vercel.app/mySelectClass?email=${user?.email}`)
         .then(res => res.json())
         .then(data => console.log(data))
     },[user])

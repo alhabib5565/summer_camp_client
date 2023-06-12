@@ -7,13 +7,13 @@ const ManageClass = () => {
     console.log(feedback)
     const [classes, setClasses] = useState([])
     useEffect(() => {
-        fetch('http://localhost:5000/allClass')
+        fetch('https://12-assignment-server.vercel.app/allClass')
             .then(res => res.json())
             .then(data => setClasses(data))
     }, [])
 
     const appvoeClass = (clss) => {
-        fetch(`http://localhost:5000/class/approve/${clss._id}`, {
+        fetch(`https://12-assignment-server.vercel.app/class/approve/${clss._id}`, {
             method: 'PATCH',
             headers: {
                 "content-type": 'application/json'

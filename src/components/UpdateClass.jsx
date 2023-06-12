@@ -15,7 +15,7 @@ const UpdateClass = () => {
         const {className, photo, price, sets} = data
         const updateClas = {className, photo, price, sets}
 
-        fetch(`http://localhost:5000/updateClas/${id}`, {
+        fetch(`https://12-assignment-server.vercel.app/updateClas/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
