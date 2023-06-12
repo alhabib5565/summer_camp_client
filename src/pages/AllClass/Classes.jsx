@@ -1,14 +1,18 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const Classes = () => {
     const [classes, setClasses] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:5000/allClass')
+        axios.get('https://12-assignment-server.vercel.app/allClass')
             .then(data => setClasses(data.data))
     }, [])
     return (
-        <div className='mt-8 md:mt-16 lg:mt-24'>
+        <div className='mt-8 md:mt-16 lg:mt-24 p-4 max-w-7xl mx-auto'>
+               <Helmet>
+                <title>sport camp || classes</title>
+            </Helmet>
             <h2 className='text-2xl md:text-4xl text-purple-950 font-bold'>Our all <span className='text-purple-400'>Approve </span> Class: <span>{classes?.length}</span></h2>
 
             <div className='grid grid-cols-1 gap-6 lg:grid-cols-3 mt-10'>

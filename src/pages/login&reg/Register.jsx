@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
 import GoogleLogin from '../../components/GoogleLogin';
+import { Helmet } from 'react-helmet-async';
 
 const Register = () => {
     const navigate = useNavigate()
@@ -30,7 +31,7 @@ const Register = () => {
                     .then(() => {
                         // console.log(result.user)
                         const savaUserData = { name: data.name, email: data.email, photo: data.photo , role: 'student'}
-                        fetch('http://localhost:5000/createUser', {
+                        fetch('https://12-assignment-server.vercel.app/createUser', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
@@ -70,6 +71,9 @@ const Register = () => {
     return (
         <div className="min-h-[calc(100vh-68px)] flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
             <ToastContainer />
+            <Helmet>
+                <title>sport camp || register</title>
+            </Helmet>
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold bg-gradient-to-r 

@@ -148,7 +148,8 @@ const Navbar = () => {
                             {navitem}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+                    <a>
+                       <span className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text text-transparent">summer camp</span></a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="items-center gap-5 uppercase menu-horizontal px-2">

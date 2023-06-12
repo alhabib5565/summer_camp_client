@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from '../../components/GoogleLogin';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
@@ -37,6 +38,11 @@ const Login = () => {
 
     return (
         <div className="min-h-[calc(100vh-68px)] flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+            <Helmet>
+                <title>
+                    sprort camp || login
+                </title>
+            </Helmet>
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold bg-gradient-to-r 

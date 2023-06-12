@@ -9,10 +9,14 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Navigation } from "swiper";
+import { Helmet } from "react-helmet-async";
 
 export default function Banner() {
     return (
         <>
+           <Helmet>
+                <title>sport camp || home</title>
+            </Helmet>
             <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
 
                 <SwiperSlide className="relative">

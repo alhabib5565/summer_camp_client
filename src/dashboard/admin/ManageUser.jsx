@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 import { RiAdminFill } from 'react-icons/ri';
 import instructor from '../../assets/instructor.webp'
 import { ToastContainer, toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 const ManageUser = () => {
     const [disable, setdisable] = useState(false)
     const [users, setUsers] = useState([])
     useState(() => {
-        axios.get('http://localhost:5000/allUser')
+        axios.get('https://12-assignment-server.vercel.app/allUser')
             .then(data => setUsers(data.data))
     }, [])
 
     const makeInstructor = (user) => {
-        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+        fetch(`https://12-assignment-server.vercel.app/users/instructor/${user._id}`, {
             method: 'PATCH',
             headers: {
                 "content-type": 'application/json'
@@ -27,7 +28,7 @@ const ManageUser = () => {
     }
 
     const makeAdmin = (user) => {
-        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+        fetch(`https://12-assignment-server.vercel.app/users/admin/${user._id}`, {
             method: 'PUT',
             headers: {
                 "content-type": 'application/json'
@@ -45,9 +46,12 @@ const ManageUser = () => {
             <ToastContainer>
                 
             </ToastContainer>
+            <Helmet>
+                <title>sport camp || manage user</title>
+            </Helmet>
             <h2 className='text-2xl md:text-4xl text-purple-950 font-bold'>Our All <span className='text-purple-400'>User </span>: <span>{users?.length}</span></h2>
 
-            <div className="overflow-x-auto rounded bg-gray-100 mt-10">
+            <div className="overflow-x-auto rounded bg-purple-100 mt-10">
                 <table className="table">
                     <thead>
                         <tr>
