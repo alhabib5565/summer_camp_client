@@ -23,21 +23,20 @@ const Dashboard = () => {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full bg-purple-400 text-lg text-white">
             {/* Sidebar content here */}
-              {
-                !isAdmin && !isInstructor && <UserNavItem></UserNavItem>
-              }
-              {
-                isAdmin && <AdminNavItem></AdminNavItem>
-              }
-              {
-                isInstructor && <InstcNavItem></InstcNavItem>
-              }
+            {
+              !isAdmin && !isInstructor && <><p className='text-2xl font-bold text-white'>user</p> <UserNavItem></UserNavItem></>
+            }
+            {
+              isAdmin && <><p className='text-2xl font-bold text-white'>admin</p> <AdminNavItem></AdminNavItem></>
+            }
+            {
+              isInstructor && <><p className='text-2xl font-bold text-white'>instructor</p> <InstcNavItem></InstcNavItem></>}
             <div className='divider'></div>
 
             <li>
-                <NavLink to='/' className={({ isActive }) => isActive ? "text-slate-300" : ""}>
-                   <FaHome></FaHome> Home
-                </NavLink>
+              <NavLink to='/' className={({ isActive }) => isActive ? "text-slate-300" : ""}>
+                <FaHome></FaHome> Home
+              </NavLink>
             </li>
 
           </ul>

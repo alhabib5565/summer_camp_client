@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
 
             if (currentUser) {
-                fetch('https://12-assignment-server.vercel.app/ganarate_jwt', {
+                fetch('http://localhost:5000/ganarate_jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

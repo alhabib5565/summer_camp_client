@@ -1,16 +1,64 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Classes = () => {
     const [classes, setClasses] = useState([])
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { user } = useContext(AuthContext)
+
     useEffect(() => {
-        axios.get('https://12-assignment-server.vercel.app/allClass')
+        axios.get('http://localhost:5000/approveClass')
             .then(data => setClasses(data.data))
     }, [])
+    const handleSeletClass = clas => {
+        console.log(clas);
+        if (user && user.email) {
+            const {className, price, photo, _id} = clas
+            const selectClass = { classId: _id, className, photo, price, email: user.email }
+            fetch('http://localhost:5000/select', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(selectClass)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    if (data.insertedId) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Food added on the cart.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                })
+        }
+        else {
+            Swal.fire({
+                title: 'Please login to select a class',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Login now!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location } })
+                }
+            })
+        }
+    }
     return (
         <div className='mt-8 md:mt-16 lg:mt-24 p-4 max-w-7xl mx-auto'>
-               <Helmet>
+            <Helmet>
                 <title>sport camp || classes</title>
             </Helmet>
             <h2 className='text-2xl md:text-4xl text-purple-950 font-bold'>Our all <span className='text-purple-400'>Approve </span> Class: <span>{classes?.length}</span></h2>
@@ -28,7 +76,7 @@ const Classes = () => {
                                 <p>Price: {clas.price}</p>
                                 <p>Sets: {clas.sets}</p>
                             </div>
-                            <button className='my-signInBtn'>Select</button>
+                            <button onClick={() => handleSeletClass(clas)} className='my-signInBtn'>Select</button>
                         </div>
                     </div>)
                 }
