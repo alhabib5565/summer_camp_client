@@ -5,7 +5,7 @@ const Instructors = () => {
     const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['user'],
         queryFn: async () => {
-            const res = await fetch('https://12-assignment-server.vercel.app/instructor')
+            const res = await fetch('https://assignmenttwelv.vercel.app/instructor')
             return res.json()
         }
     })

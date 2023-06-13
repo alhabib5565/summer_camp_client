@@ -9,7 +9,7 @@ const MyClass = () => {
     // const [classes, setClasses] = useState([])
     const { user, loading } = useContext(AuthContext)
     // useEffect(() => {
-    //     fetch(`https://12-assignment-server.vercel.app/class/${user?.email}`)
+    //     fetch(`https://assignmenttwelv.vercel.app/class/${user?.email}`)
     //         .then(res => res.json())
     //         .then(data => setClasses(data))
     // }, [])
@@ -18,7 +18,7 @@ const MyClass = () => {
         queryKey: ['class', user?.email],
         enabled: !loading,
         queryFn: async () => {
-            const res = await fetch(`https://12-assignment-server.vercel.app/class/${user?.email}`, {
+            const res = await fetch(`https://assignmenttwelv.vercel.app/class/${user?.email}`, {
                 headers: {
                     authrization: `bearer ${token}`
                 }
@@ -38,7 +38,7 @@ const MyClass = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://12-assignment-server.vercel.app/removeClas/${id}`, {
+                fetch(`https://assignmenttwelv.vercel.app/removeClas/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

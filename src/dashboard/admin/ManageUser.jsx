@@ -8,12 +8,12 @@ const ManageUser = () => {
     const [disable, setdisable] = useState(false)
     const [users, setUsers] = useState([])
     useState(() => {
-        axios.get('https://12-assignment-server.vercel.app/allUser')
+        axios.get('https://assignmenttwelv.vercel.app/allUser')
             .then(data => setUsers(data.data))
     }, [])
 
     const makeInstructor = (user) => {
-        fetch(`https://12-assignment-server.vercel.app/users/instructor/${user._id}`, {
+        fetch(`https://assignmenttwelv.vercel.app/users/instructor/${user._id}`, {
             method: 'PATCH',
             headers: {
                 "content-type": 'application/json'
@@ -28,7 +28,7 @@ const ManageUser = () => {
     }
 
     const makeAdmin = (user) => {
-        fetch(`https://12-assignment-server.vercel.app/users/admin/${user._id}`, {
+        fetch(`https://assignmenttwelv.vercel.app/users/admin/${user._id}`, {
             method: 'PUT',
             headers: {
                 "content-type": 'application/json'

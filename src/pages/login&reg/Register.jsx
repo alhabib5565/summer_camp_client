@@ -31,7 +31,7 @@ const Register = () => {
                     .then(() => {
                         // console.log(result.user)
                         const savaUserData = { name: data.name, email: data.email, photo: data.photo , role: 'student'}
-                        fetch('https://12-assignment-server.vercel.app/createUser', {
+                        fetch('https://assignmenttwelv.vercel.app/createUser', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
