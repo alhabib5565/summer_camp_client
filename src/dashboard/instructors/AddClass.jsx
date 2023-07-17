@@ -10,7 +10,7 @@ const AddClass = () => {
         console.log(data)
         const {className, email,instructorName, photo, price, sets} = data
         const savaClass = {className, email, instructorName, photo, price, sets, status:"pending"}
-        fetch('https://assignmenttwelv.vercel.app/saveClass', {
+        fetch('http://localhost:5000/saveClass', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

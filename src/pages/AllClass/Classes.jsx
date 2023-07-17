@@ -12,7 +12,7 @@ const Classes = () => {
     const { user } = useContext(AuthContext)
 
     useEffect(() => {
-        axios.get('https://assignmenttwelv.vercel.app/approveClass')
+        axios.get('http://localhost:5000/approveClass')
             .then(data => setClasses(data.data))
     }, [])
     const handleSeletClass = clas => {
@@ -20,7 +20,7 @@ const Classes = () => {
         if (user && user.email) {
             const {className, price, photo, _id} = clas
             const selectClass = { classId: _id, className, photo, price, email: user.email }
-            fetch('https://assignmenttwelv.vercel.app/select', {
+            fetch('http://localhost:5000/select', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

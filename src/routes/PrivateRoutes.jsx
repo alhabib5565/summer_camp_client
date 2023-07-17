@@ -8,7 +8,7 @@ const PrivateRoutes = ({ children }) => {
     const location = useLocation();
 
     if (loading) {
-        return <div className="flex justify-center items-center">
+        return <div className="flex h-full justify-center items-center">
             <Bars
                 height="80"
                 width="80"

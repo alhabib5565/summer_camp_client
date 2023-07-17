@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 
 const axiosSecure = axios.create({
-    baseURL: 'https://assignmenttwelv.vercel.app',
+    baseURL: 'http://localhost:5000',
 });
 
 const useAxiosSecure = () => {
@@ -15,7 +15,7 @@ const useAxiosSecure = () => {
         axiosSecure.interceptors.request.use((config) => {
             const token = localStorage.getItem('jwt_token');
             if (token) {
-                config.headers.authrization = `Bearer ${token}`;
+                config.headers.authorization = `Bearer ${token}`;
             }
             return config;
         });
