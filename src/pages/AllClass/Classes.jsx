@@ -10,7 +10,7 @@ const Classes = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const { user } = useContext(AuthContext)
-
+    console.log(classes)
     useEffect(() => {
         axios.get('http://localhost:5000/approveClass')
             .then(data => setClasses(data.data))
@@ -18,8 +18,8 @@ const Classes = () => {
     const handleSeletClass = clas => {
         console.log(clas);
         if (user && user.email) {
-            const {className, price, photo, _id} = clas
-            const selectClass = { classId: _id, className, photo, price, email: user.email }
+            const { className, price, photo, _id, instructorName} = clas
+            const selectClass = { classId: _id, className, photo,instructorName, price,  email: user.email }
             fetch('http://localhost:5000/select', {
                 method: 'POST',
                 headers: {
@@ -34,7 +34,7 @@ const Classes = () => {
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'Food added on the cart.',
+                            title: 'Add to bookmark',
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -57,26 +57,27 @@ const Classes = () => {
         }
     }
     return (
-        <div className='mt-8 md:mt-16 lg:mt-24 p-4 max-w-7xl mx-auto'>
+        <div className='pt-20  max-w-[1440px] px-3 md-px-6 lg:px-10 mx-auto'>
             <Helmet>
                 <title>sport camp || classes</title>
             </Helmet>
-            <h2 className='text-2xl md:text-4xl text-purple-950 font-bold'>Our all <span className='text-purple-400'>Approve </span> Class: <span>{classes?.length}</span></h2>
+            <h2 className='text-2xl uppercase text-center md:text-4xl text-yellow-950 font-bold mt-8 md:mt-16 lg:mt-24'>Our totall class {classes?.length}</h2>
 
             <div className='grid grid-cols-1 gap-6 lg:grid-cols-3 mt-10'>
                 {
-                    classes.map(clas => <div key={clas._id} className="card max-w-md w-full mx-auto bg-base-100 shadow-xl border-2 border-purple-200 hover:-translate-y-2 duration-300 hover:bg-purple-100">
+                    classes.map(clas => <div key={clas._id} className={`${clas.sets < 1 ? "bg-red-400": 'bg-base-100 border-gray-200 hover:-translate-y-2 duration-300 hover:bg-yellow-50'} card max-w-md w-full mx-auto shadow-xl border-2 `}>
                         <figure className="p-7">
                             <img src={clas?.photo} className="rounded-xl w-full h-[210px]" />
                         </figure>
                         <div className="card-body m-0">
-                            <h2 className=" uppercase text-lg font-medium text-gray-700">NAME: <span className='text-purple-700'>{clas.className}</span></h2>
+                            <h2 className=" uppercase text-lg font-medium text-gray-700">Name:{clas.className}</h2>
                             <p>email: {clas.email}</p>
+                            <p>Instructor Name: {clas.instructorName}</p>
                             <div className='flex justify-between'>
                                 <p>Price: {clas.price}</p>
                                 <p>Sets: {clas.sets}</p>
                             </div>
-                            <button onClick={() => handleSeletClass(clas)} className='my-signInBtn'>Select</button>
+                            <button disabled={clas.sets < 1} onClick={() => handleSeletClass(clas)} className='my-signInBtn'>Select</button>
                         </div>
                     </div>)
                 }

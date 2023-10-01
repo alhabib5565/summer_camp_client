@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import useAdmin from '../../hooks/useAdmin';
 import useInstructor from '../../hooks/useInstructor';
+//new import
+import { FaBars, FaTimes } from 'react-icons/fa'
 
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
@@ -28,138 +30,124 @@ const Navbar = () => {
                 })
             })
     }
+    const [menuOpen, setMenuOpen] = useState(false)
 
-    const navitem = <>
-        <li className='hover:text-slate-400'>
-            <NavLink
-                to='/'
-                className={({ isActive }) =>
-                    isActive ? "text-slate-300" : ""
-                }
-            >
-                home
-            </NavLink>
-        </li>
+    const naviItems = [
+        // { id: 1, name: 'register', linkName: 'register' },
+        { id: 1, name: 'home', linkName: '/' },
+        { id: 2, name: 'instructor', linkName: '/instructor' },
+        { id: 3, name: 'all Class', linkName: '/allClass' },
+    ]
 
-        <li className='hover:text-slate-400'>
-            <NavLink
-                to='/register'
-                className={({ isActive }) =>
-                    isActive ? "text-slate-300" : ""
-                }
-            >
-                register
-            </NavLink>
-        </li>
-
-        <li className='hover:text-slate-400'>
-            <NavLink
-                to='/instructor'
-                className={({ isActive }) =>
-                    isActive ? "text-slate-300" : ""
-                }
-            >
-                instructor
-            </NavLink>
-        </li>
-
-        <li className='hover:text-slate-400'>
-            <NavLink
-                to='/allClass'
-                className={({ isActive }) =>
-                    isActive ? "text-slate-300" : ""
-                }
-            >
-                all class
-            </NavLink>
-        </li>
-
+    const dashboard_link = <>
         {
-            !isInstructor && !isAdmin && <li className='hover:text-slate-400'>
-                <NavLink
-                    to='/dashboard/userHome'
-                    className={({ isActive }) =>
-                        isActive ? "text-slate-300" : ""
-                    }
-                >
-                    dashboard
-                </NavLink>
-            </li>
-        }
-
-        {
-            isInstructor && <li className='hover:text-slate-400'>
-                <NavLink
-                    to='/dashboard/myClass'
-                    className={({ isActive }) =>
-                        isActive ? "text-slate-300" : ""
-                    }
-                >
-                    dashboard
-                </NavLink>
-            </li>
-        }
-
-        {
-            isAdmin && <li className='hover:text-slate-400'>
-                <NavLink
-                    to='/dashboard/adminHome'
-                    className={({ isActive }) =>
-                        isActive ? "text-slate-300" : ""
-                    }
-                >
-                    dashboard
-                </NavLink>
-            </li>
-        }
-
-        {
-            user ? <>
-                <button className='my-button ' onClick={handleLogout}>logout</button>
-                <div className="avatar">
-                    <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 hover:scale-105 duration-100">
-                        <img title={user.displayName} src={user.photoURL} />
-                    </div>
-                </div>
-            </>
-                : <li className='hover:text-slate-400'>
+            isAdmin
+                ? <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
                     <NavLink
-                        to='/login'
+                        to='/dashboard/adminHome'
                         className={({ isActive }) =>
-                            isActive ? "text-slate-300" : ""
+                            isActive ? "text-yellow-300" : ""
                         }
                     >
-                        login
+                        dashboard
                     </NavLink>
-                </li>
-
+                </span>
+                : isInstructor
+                    ? <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
+                        <NavLink
+                            to='/dashboard/myClass'
+                            className={({ isActive }) =>
+                                isActive ? "text-yellow-300" : ""
+                            }
+                        >
+                            dashboard
+                        </NavLink>
+                    </span>
+                    : <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
+                        <NavLink
+                            to='/dashboard/userHome'
+                            className={({ isActive }) =>
+                                isActive ? "text-yellow-300" : ""
+                            }
+                        >
+                            dashboard
+                        </NavLink>
+                    </span>
         }
     </>
 
     return (
-        <div className='bg-purple-900 text-white'>
-            <div className="navbar max-w-7xl mx-auto">
-                <div className="navbar-start">
-                    <div className="dropdown">
-                        <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                        </label>
-                        <ul tabIndex={0} className="menu menu-sm uppercase dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                            {navitem}
-                        </ul>
-                    </div>
-                    <a>
-                       <span className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-red-500 bg-clip-text text-transparent">summer camp</span></a>
-                </div>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="items-center gap-5 uppercase menu-horizontal px-2">
-                        {navitem}
-                    </ul>
-                </div>
-                <div className='navbar-end'>
-                    {user && <p>{user.displayName}</p>}
+
+        <div className='bg-cyan-950 fixed z-50 h-20 w-full border-b-[1px] hover:shadow-xl border-gray-300 shadow-lg'>
+            <div className='max-w-[1440px] px-3 md-px-6 lg:px-10 mx-auto h-full flex justify-between items-center text-white'>
+                <Link to='/'>
+                    <h2 className='text-2xl lg:text-4xl font-signature font-bold'>Collage Admission</h2>
+                </Link>
+
+
+                <ul className='hidden md:flex items-center gap-4 lg:gap-7'>
+                    {
+                        naviItems.map(navItem => <li key={navItem.id} className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
+                            <NavLink
+                                to={navItem.linkName}
+                                className={({ isActive }) =>
+                                    isActive ? "text-yellow-300" : ""
+                                }
+                            >
+                                {navItem.name}
+                            </NavLink>
+                        </li>)
+                    }
+                </ul>
+
+                {
+                    user
+                        ? <div className='flex gap-3 items-center'>
+                            {dashboard_link}
+                            <button onClick={handleLogout} className="my-googleBtn bg-white">Log Out</button>
+                            <img className='w-12 h-12 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
+                        </div>
+                        : <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
+                            <NavLink
+                                to='/login'
+                                className={({ isActive }) =>
+                                    isActive ? "text-yellow-300" : ""
+                                }
+                            >
+                                login
+                            </NavLink>
+                        </span>
+                }
+
+                <div onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer  text-gray-300 md:hidden">
+                    {
+                        menuOpen ? <FaTimes size={30}></FaTimes> : <FaBars size={30}></FaBars>
+                    }
                 </div>
 
+                {
+                    menuOpen && <ul className='absolute top-20 box-border bg-cyan-950 w-full md:w-[50vw] rounded-xl py-6 right-0'>
+                        {
+                            user ? <div className='flex px-6 mb-3 flex-col gap-3 items-center'>
+                                <img className='w-16 h-16 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
+                                <p>{user?.displayName}</p>
+                                <button onClick={handleLogout} className=" my-googleBtn bg-white">Log Out</button>
+                            </div>
+                                : <Link to='/login'>
+                                    <li className='text-gray-300 cursor-pointer  font-medium uppercase px-6 py-3 hover:bg-cyan-800  duration-300'>
+                                        login
+                                    </li>
+                                </Link>
+                        }
+                        {
+                            naviItems.map(navItem => <Link key={navItem.id} onClick={() => setMenuOpen(false)} to={navItem.linkName}>
+                                <li className=' text-gray-300 cursor-pointer  font-medium uppercase px-6 py-3 hover:bg-cyan-800  duration-300'>
+                                    {navItem.name}
+                                </li>
+                            </Link>)
+                        }
+                    </ul>
+                }
             </div>
         </div>
     );

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../../components/CheckOutForm';

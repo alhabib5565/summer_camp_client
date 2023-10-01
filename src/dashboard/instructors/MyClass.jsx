@@ -26,7 +26,7 @@ const MyClass = () => {
             return res.json()
         }
     })
-
+console.log(classes)
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -79,7 +79,7 @@ const MyClass = () => {
                     </thead>
                     <tbody>
                         {
-                            classes.map((clas, index) => <tr key={index}>
+                            classes?.map((clas, index) => <tr key={index}>
                                 <td>
                                     {index + 1}
                                 </td>
@@ -94,7 +94,7 @@ const MyClass = () => {
                                     {clas?.className}
                                 </td>
                                 <td>{clas?.status}</td>
-                                <td>Enrolled</td>
+                                <td>{clas.enrolled + 4}</td>
                                 <td>No Feedback</td>
                                 <td className='flex items-center gap-4 '>
                                     <Link to={`/dashboard/updateClass/${clas._id}`}><button className='btn btn-ghost btn-sm text-white hover:text-gray-700 bg-purple-500'> update</button></Link>

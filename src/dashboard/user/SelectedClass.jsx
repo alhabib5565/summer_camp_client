@@ -1,19 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../provider/AuthProvider';
+
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { FaTrashAlt } from 'react-icons/fa'
-import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useSelectClass from '../../hooks/useSelectClass';
 import Loader from '../../components/Loader';
-import PaymentModal from '../../components/PaymentModal';
+import SelectTable from './SelectTable';
 const SelectedClass = () => {
     const [seleteClass, refetch, isLoading] = useSelectClass()
     const [axiosSecure] = useAxiosSecure()
-    const [isOpen, setIsOpen] = useState(false)
-    const closeModal = () => {
-        setIsOpen(false)
-    }
+   
     const handleDelete = id => {
         Swal.fire({
             title: 'Are you sure?',
@@ -60,37 +54,12 @@ const SelectedClass = () => {
                             </thead>
                             <tbody>
                                 {
-                                    seleteClass.map((sClas, index) => <tr key={index}>
-                                        <td>
-                                            {index + 1}
-                                        </td>
-                                        <td>
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img className='hover:scale-110 duration-200' src={sClas?.photo} alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {sClas?.className}
-                                        </td>
-                                        <td>$ {sClas.price}</td>
-                                        <td className='flex items-center gap-4 '>
-                                            <button onClick={() => handleDelete(sClas._id)} title='delete' className="btn bg-red-500 text-white duration-500 hover:text-gray-700 rounded-full">
-                                                <FaTrashAlt className='text-lg'></FaTrashAlt>
-                                            </button>
-                                            <button onClick={() => setIsOpen(true)} className='btn btn-sm btn-warning'>
-                                                Pay
-                                            </button>
-
-                                        </td>
-                                    </tr>)
+                                    seleteClass.map((sClas, index) => <SelectTable key={index} index={index} sClas={sClas} handleDelete={handleDelete}></SelectTable>)
                                 }
                             </tbody>
                         </table>
                     </div>
             }
-            <PaymentModal closeModal={closeModal} isOpen={isOpen}></PaymentModal>
         </div>
     );
 };
