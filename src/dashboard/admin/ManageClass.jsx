@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ToastContainer, toast } from 'react-toastify';
-// import {PiSpinnerBold} from 
-import {BiLoaderCircle} from 'react-icons/bi'
+import { BiLoaderCircle } from 'react-icons/bi'
+import { CgCalendarDates } from "react-icons/cg"
+import moment from 'moment';
+import AdminShowClass from './AdminShowClass';
+import useSelectClass from '../../hooks/useSelectClass';
+import DenyFeedback from './DenyFeedback';
+
 const ManageClass = () => {
     const [feedback, setFeedback] = useState('')
+    const [, refetch] = useSelectClass()
     const [classes, setClasses] = useState([])
+    const [isOpen, setIsOpen] = useState(false)
+    const [denyFeedbackModalOpen, setDenyFeedbackModalOpen] = useState(false)
+    const [id, setId] = useState('')
     useEffect(() => {
         fetch('http://localhost:5000/allClass')
             .then(res => res.json())
@@ -23,118 +32,74 @@ const ManageClass = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
-                    toast.success(`approve your class`)
+                    toast.success(`approve class successfully`)
+                    refetch()
                 }
                 console.log(data)
             })
     }
 
+    const openClassDetailsModal = (id) => {
+        setId(id)
+        setIsOpen(true)
+    }
+    const denyFeedback = (id) => {
+        setDenyFeedbackModalOpen(true)
+        setId(id)
+    }
+
     return (
-        <div>
-            <h2 className='text-2xl md:text-4xl text-purple-950 font-bold'>Our all <span className='text-purple-400'>Approve </span> Class: <span>{classes?.length}</span></h2>
+        <div className='p-4'>
+            <h2 className=' text-2xl md:text-4xl text-gray-950 font-bold mb-5'>Our totall class {classes?.length}</h2>
             <ToastContainer></ToastContainer>
             <Helmet>
                 <title>sport camp || manage class</title>
             </Helmet>
-            {/* Open the modal using ID.showModal() method */}
-            <dialog id="my_modal_1" className="modal">
-                <form method="dialog" className="modal-box">
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4"> why the Class was denied</p>
-                    <textarea onChange={() => setFeedback(value)} className="textarea textarea-bordered w-full" placeholder="Bio"></textarea>
-                    <div className="modal-action">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">submit feedback</button>
-                        <button className="btn">Close</button>
-                    </div>
-                </form>
-            </dialog>
-            <div className="overflow-x-aut rounded m-3 bg-gray-100 mt-10">
-                <table className="w-full mx-auto overflow-x-auto">
-                    <thead className='justify-between'>
-                        <tr className='bg-cyan-700 text-white'>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">#</span>
-                            </th>
-                            <th className="px-4 hidden md:block py-2">
-                                <span className="text-gray-100 font-semibold">Image</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">Instructor name</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">Class name</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">instructor email</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">Status</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">price</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold"> Sets</span>
-                            </th>
-                            <th className="px-4 py-2">
-                                <span className="text-gray-100 font-semibold">action</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className='bg-gray-200'>
-                        {
-                            classes.map((clss, index) => <tr key={index} className='bg-white border-b-2 border-gray-200'>
-                                <td>
-                                    {index + 1}
-                                </td>
 
-                                <td className="hidden pl-4 md:pl-8 py-2 md:flex flex-row  items-center">
-                                    <img
-                                        className="h-8 w-8 rounded-full object-cover"
-                                        src={clss?.photo}
-                                        alt=""
-                                    />
-                                </td>
-                                <td className='pl-4 md:pl-8'>
-                                    <span className="text-center ml-2 font-">{clss?.instructorName}</span>
-                                </td>
-                                <td className='pl-4 md:pl-8'>
-                                    <span className="text-center ml-2 font-">{clss?.className}</span>
-                                </td>
-                                <td className='pl-4 md:pl-8'>
-                                    <span className="text-center">{clss?.email}</span>
-                                </td>
-                                <td className='pl-4 md:pl-8'>
-                                    {
-                                        clss.status === 'pending' ? <span className='flex items-center justify-center rounded-md border border-transparent bg-cyan-100 px-2 py-1 text-sm font-medium text-cyan-900 hover:bg-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2'>
-                                            <span>{clss.status}</span> <span className='animate-spin'><BiLoaderCircle/></span>
-                                        </span>
-                                            : <span>{clss.status}</span>
-                                    }
-                                </td>
+            <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
+                {
+                    classes.map((clss, index) => <div key={index} className="max-w-sm w-full lg:max-w-full">
+                        <img className='h-48 w-full' src={clss.classPhoto} alt="" />
+                        <div className="border border-gray-400 bg-white rounded-b flex flex-col justify-between leading-normal">
+                            <div className='p-4'>
+                                {/* instructor avater */}
+                                <div className="flex items-center mb-6">
+                                    <img className="w-10 h-10 rounded-full mr-4" src={clss.instructorPhoto} alt="Avatar of Jonathan Reinink" />
+                                    <div className="text-sm">
+                                        <p className="text-gray-900 leading-none">{clss.instructorName}</p>
+                                        <p className="text-gray-600">{moment(clss.whenAddClass).format("MMM DD YYYY")}</p>
+                                    </div>
+                                </div>
+                                <div className="text-gray-900 font-bold text-xl mb-2">{clss.className}</div>
+                                {/* start date and end date */}
+                                {
+                                    clss.enrollStartDate && clss.enrollEndDate &&
+                                    <div className='flex flex-col md:flex-row gap-2 items-center mb-4'>
+                                        <p className='w-full flex gap-1 items-center bg-cyan-600 text-gray-200 rounded p-1 text-sm'><CgCalendarDates /> Enroll start {moment(clss.enrollStartDate).format("MMM DD YY")}</p>
+                                        <p className='w-full flex gap-1 items-center bg-cyan-600 text-gray-200 rounded p-1 text-sm'><CgCalendarDates /> Enroll end {moment(clss.enrollEndDate).format("MMM DD YY")}</p>
+                                    </div>
+                                }
 
-                                <td className='pl-4 md:pl-8'>
-                                    $<span className='text-cyan-700'>{clss.price}</span>
-                                </td>
-                                <td className='text-center'>{clss.sets}</td>
-                                <td className='flex items-center justify-center gap-2'>
-
-                                    <button disabled={clss.role === 'instructor'} onClick={() => window.my_modal_1.showModal()} title=' make instructor' className='btn btn-ghost btn-xs text-white hover:text-gray-700 bg-cyan-500'>
+                                {/* class approv or deny button */}
+                                <div className='flex justify-between items-center'>
+                                    <button disabled={clss.status === 'approve'} onClick={() => denyFeedback(clss._id)} title=' make instructor' className='btn btn-ghost btn-xs text-white hover:text-gray-700 bg-cyan-500'>
                                         deny
                                     </button>
 
                                     <button disabled={clss.status === 'approve'}
-                                        onClick={() => appvoeClass(clss)} className='btn btn-ghost btn-xs text-white hover:text-gray-700 bg-yellow-500'> approve</button>
-
-                                    {/* <button disabled={clss.role === 'admin'} onClick={() => makeAdmin(clss)} title='make admin' className='btn btn-ghost btn-xs text-white hover:text-gray-700 bg-purple-500'>
-                                  pending
-                                  </button> */}
-                                </td>
-                            </tr>)
-                        }
-                    </tbody>
-                </table>
+                                        onClick={() => appvoeClass(clss)} className='btn btn-ghost btn-xs text-white hover:text-gray-700 bg-yellow-500'> approve
+                                    </button>
+                                </div>
+                            </div>
+                            <hr className='border-[1px]' />
+                            <div className="px-4 py-3 w-full text-center">
+                                <button onClick={() => openClassDetailsModal(clss._id)} className="px-4 py-2 mx-auto font-medium rounded border-2 border-cyan-500 hover:bg-cyan-600 hover:text-white duration-300 text-cyan-400">View Details</button>
+                            </div>
+                        </div>
+                    </div>)
+                }
+                <AdminShowClass isOpen={isOpen} setIsOpen={setIsOpen} id={id}></AdminShowClass>
+                <DenyFeedback id={id} denyFeedbackModalOpen={denyFeedbackModalOpen} setDenyFeedbackModalOpen={setDenyFeedbackModalOpen}></DenyFeedback>
             </div>
         </div>
     );

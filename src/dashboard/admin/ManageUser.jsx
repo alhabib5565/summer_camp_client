@@ -18,13 +18,13 @@ const ManageUser = () => {
             headers: {
                 "content-type": 'application/json'
             },
-            body: JSON.stringify({role: 'instructor'})
+            body: JSON.stringify({ role: 'instructor' })
         })
-        .then(res => res.json())
-        .then(data => {
-            toast.success(`create instructor ${user.name}`)
-            console.log(data)
-        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success(`create instructor ${user.name}`)
+                console.log(data)
+            })
     }
 
     const makeAdmin = (user) => {
@@ -33,19 +33,17 @@ const ManageUser = () => {
             headers: {
                 "content-type": 'application/json'
             },
-            body: JSON.stringify({role: 'admin'})
+            body: JSON.stringify({ role: 'admin' })
         })
-        .then(res => res.json())
-        .then(data => {
-            toast.success(`crete admin ${user.name}`)
-            console.log(data)
-        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success(`crete admin ${user.name}`)
+                console.log(data)
+            })
     }
     return (
         <div className='max-w-4xl mx-auto p-4'>
-            <ToastContainer>
-                
-            </ToastContainer>
+            <ToastContainer />
             <Helmet>
                 <title>sport camp || manage user</title>
             </Helmet>

@@ -1,88 +1,95 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../provider/AuthProvider';
-import Swal from 'sweetalert2';
-
+import ClassCard from './ClassCard';
+import Loader from '../../components/Loader';
+import { HiOutlineArrowSmRight, HiOutlineArrowSmLeft } from 'react-icons/hi'
 const Classes = () => {
     const [classes, setClasses] = useState([])
-    const navigate = useNavigate()
-    const location = useLocation()
-    const { user } = useContext(AuthContext)
-    console.log(classes)
+    const [itemsPerPage, setItemsPerPage] = useState(3)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [lengthOfApproveClass, setLengthOfApproveClass] = useState(0)
+
     useEffect(() => {
-        axios.get('http://localhost:5000/approveClass')
+        axios.get(`http://localhost:5000/approveClass?currentPage=${currentPage}&itemsPerPage=${itemsPerPage}`)
             .then(data => setClasses(data.data))
+    }, [currentPage, itemsPerPage])
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/approveClassNumber`)
+            .then(data => setLengthOfApproveClass(data.data.totalApproveClass))
     }, [])
-    const handleSeletClass = clas => {
-        console.log(clas);
-        if (user && user.email) {
-            const { className, price, photo, _id, instructorName} = clas
-            const selectClass = { classId: _id, className, photo,instructorName, price,  email: user.email }
-            fetch('http://localhost:5000/select', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(selectClass)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    if (data.insertedId) {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Add to bookmark',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    }
-                })
-        }
-        else {
-            Swal.fire({
-                title: 'Please login to select a class',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Login now!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate('/login', { state: { from: location } })
-                }
-            })
-        }
+
+    const totalPage = Math.ceil(lengthOfApproveClass / itemsPerPage)
+
+    const pageNumbers = [...Array(totalPage).keys()]
+    const options = [2, 4, 6]
+    const handleSelectChange = (event) => {
+        setItemsPerPage(event.target.value)
+        setCurrentPage(0)
+    }
+    const nextPage = () => {
+        const currentActivePage = totalPage - 1 === currentPage
+        const newPage = currentActivePage ? 0 : currentPage + 1
+        setCurrentPage(newPage)
+    }
+    const previousPage = () => {
+        const currentActivePage =  currentPage === 0
+        const newPage = currentActivePage ?totalPage - 1 :  currentPage - 1
+        setCurrentPage(newPage)
     }
     return (
-        <div className='pt-20  max-w-[1440px] px-3 md-px-6 lg:px-10 mx-auto'>
+        <div className='pt-20  max-w-[1440px] px-2 md:px-6 lg:px-10 mx-auto mb-20'>
             <Helmet>
                 <title>sport camp || classes</title>
             </Helmet>
-            <h2 className='text-2xl uppercase text-center md:text-4xl text-yellow-950 font-bold mt-8 md:mt-16 lg:mt-24'>Our totall class {classes?.length}</h2>
+            {
+                classes.length < 1 ? <Loader></Loader> : <>
+                    <h2 className='text-2xl uppercase text-center md:text-4xl text-yellow-950 font-bold mt-8 '>Our totall class {classes?.length}</h2>
 
-            <div className='grid grid-cols-1 gap-6 lg:grid-cols-3 mt-10'>
-                {
-                    classes.map(clas => <div key={clas._id} className={`${clas.sets < 1 ? "bg-red-400": 'bg-base-100 border-gray-200 hover:-translate-y-2 duration-300 hover:bg-yellow-50'} card max-w-md w-full mx-auto shadow-xl border-2 `}>
-                        <figure className="p-7">
-                            <img src={clas?.photo} className="rounded-xl w-full h-[210px]" />
-                        </figure>
-                        <div className="card-body m-0">
-                            <h2 className=" uppercase text-lg font-medium text-gray-700">Name:{clas.className}</h2>
-                            <p>email: {clas.email}</p>
-                            <p>Instructor Name: {clas.instructorName}</p>
-                            <div className='flex justify-between'>
-                                <p>Price: {clas.price}</p>
-                                <p>Sets: {clas.sets}</p>
-                            </div>
-                            <button disabled={clas.sets < 1} onClick={() => handleSeletClass(clas)} className='my-signInBtn'>Select</button>
-                        </div>
-                    </div>)
-                }
-            </div>
-        </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 xl:grid-cols-3 mt-10'>
+                        {
+                            classes.map((clss, index) => <ClassCard key={index} clss={clss}></ClassCard>)
+                        }
+                    </div>
+                    <div className='flex justify-center items-center gap-4 mt-10'>
+                        <button
+                            onClick={previousPage}
+                            className="bg-gray-200 text-gray-600 mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-100 p-0 text-sm transition duration-300 ease-in-out hover:bg-cyan-500 hover:text-white"
+                        >
+                            <span className="material-icons text-sm"><HiOutlineArrowSmLeft size={20} /></span>
+                        </button>
+                        {
+                            pageNumbers.map((pageNumber) => <button
+                                key={pageNumber}
+                                onClick={() => setCurrentPage(pageNumber)}
+                                className={`mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-lg font-medium shadow-md shadow-cyan-500/20 transition duration-150 ease-in-out ${currentPage === pageNumber ? 'bg-cyan-500 text-white' : "bg-gray-200 text-gray-600"}`}
+                            >
+                                <span className="material-icons text-sm">{pageNumber}</span>
+                            </button>
+                            )
+                        }
+                        <button
+                            onClick={nextPage}
+                            className="bg-gray-200 text-gray-600 mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-gray-100 p-0 text-sm transition duration-300 ease-in-out hover:bg-cyan-500 hover:text-white"
+                        >
+                            <span className="material-icons text-sm"><HiOutlineArrowSmRight size={20} /></span>
+                        </button>
+                        <select
+                            onChange={handleSelectChange}
+                            className=" px-1 sm:px-2 md:px-3 py-1 bg-gray-200 text-gray-600 border-2  focus:outline-gray-400  rounded-md"
+                        >
+                            {options.map((option, index) => (
+                                <option key={index} value={option}>
+                                    {option}
+                                </option>
+                            ))}
+
+                        </select>
+                    </div>
+                </>
+            }
+        </div >
     );
 };
 

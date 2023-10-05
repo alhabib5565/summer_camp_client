@@ -4,10 +4,11 @@ import Swal from 'sweetalert2';
 import useSelectClass from '../../hooks/useSelectClass';
 import Loader from '../../components/Loader';
 import SelectTable from './SelectTable';
+import NoData from '../../components/NoData';
 const SelectedClass = () => {
     const [seleteClass, refetch, isLoading] = useSelectClass()
     const [axiosSecure] = useAxiosSecure()
-   
+
     const handleDelete = id => {
         Swal.fire({
             title: 'Are you sure?',
@@ -38,26 +39,30 @@ const SelectedClass = () => {
 
     return (
         <div className='max-w-3xl mx-auto p-4'>
-            <h2 className='text-2xl md:text-4xl my-4 font-bold'>Your Select Class:  <span className='text-purple-500 font-bold'>{seleteClass.length}</span></h2>
+
             {
-                isLoading ? <Loader></Loader> :
-                    <div className="overflow-x-auto rounded bg-purple-100">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th> #</th>
-                                    <th>image</th>
-                                    <th>Name</th>
-                                    <th>price</th>
-                                    <th>action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    seleteClass.map((sClas, index) => <SelectTable key={index} index={index} sClas={sClas} handleDelete={handleDelete}></SelectTable>)
-                                }
-                            </tbody>
-                        </table>
+                seleteClass.length < 1 ? <NoData link={'/allClass'} linkName={'Add Bookmark Now'} subTitle='Please add to bookmark' title='You have no bookmark class'></NoData> :
+                    <div>
+                        <h2 className='text-2xl md:text-4xl my-4 font-bold'>Your Select Class:  <span className='text-purple-500 font-bold'>{seleteClass.length}</span></h2>
+                        <div className="overflow-x-auto rounded bg-purple-100">
+
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th> #</th>
+                                        <th>image</th>
+                                        <th>Name</th>
+                                        <th>price</th>
+                                        <th>action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        seleteClass.map((sClas, index) => <SelectTable key={index} index={index} sClas={sClas} handleDelete={handleDelete}></SelectTable>)
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
             }
         </div>

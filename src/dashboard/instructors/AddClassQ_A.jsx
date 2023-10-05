@@ -58,8 +58,8 @@ const AddClassQ_A = ({ isOpen, setIsOpen, setQA, QA }) => {
                     {
                         qaPairs.map((pair, index) => (
                             <div className='relative' key={index}>
-                                <div className="space-y-1 text-sm">
-                                    <label htmlFor={`question-${index}`} className="block text-gray-600 mb-2">
+                                <div className="space-y-1 text-sm mb-4">
+                                    <label htmlFor={`question-${index}`} className="block text-gray-600 mb-1">
                                         Question
                                     </label>
                                     <input
@@ -72,8 +72,8 @@ const AddClassQ_A = ({ isOpen, setIsOpen, setQA, QA }) => {
                                         onChange={(e) => handleQuestionChange(index, e.target.value)}
                                     />
                                 </div>
-                                <div className="space-y-1 text-sm">
-                                    <label htmlFor={`answer-${index}`} className="block text-gray-600 mb-2">
+                                <div className="space-y-1 text-sm mb-4">
+                                    <label htmlFor={`answer-${index}`} className="block text-gray-600 mb-1">
                                         Answer
                                     </label>
                                     <textarea

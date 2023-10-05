@@ -6,11 +6,13 @@ import useAdmin from '../../hooks/useAdmin';
 import useInstructor from '../../hooks/useInstructor';
 //new import
 import { FaBars, FaTimes } from 'react-icons/fa'
+import useSelectClass from '../../hooks/useSelectClass';
 
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
+    const [seleteClass, refetch, isLoading] = useSelectClass()
     const handleLogout = () => {
         logoutUser()
             .then(() => {
@@ -81,7 +83,7 @@ const Navbar = () => {
         <div className='bg-cyan-950 fixed z-50 h-20 w-full border-b-[1px] hover:shadow-xl border-gray-300 shadow-lg'>
             <div className='max-w-[1440px] px-3 md-px-6 lg:px-10 mx-auto h-full flex justify-between items-center text-white'>
                 <Link to='/'>
-                    <h2 className='text-2xl lg:text-4xl font-signature font-bold'>Collage Admission</h2>
+                    <h2 className='text-2xl lg:text-4xl font-signature font-bold'>E Class</h2>
                 </Link>
 
 
@@ -102,7 +104,18 @@ const Navbar = () => {
 
                 {
                     user
-                        ? <div className='flex gap-3 items-center'>
+                        ? <div className='hidden md:flex gap-3 items-center'>
+                            <label tabIndex={0} className="btn btn-ghost btn-circle">
+                                <Link to='dashboard/selectedClass' className="indicator">
+                                    <svg className="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinejoin="round" strokeWidth="1" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                    </svg>
+                                    {
+                                        seleteClass.length > 0 ? <span className="badge badge-sm indicator-item">{seleteClass.length}</span>
+                                            : <span className="badge badge-sm indicator-item">0</span>
+                                    }
+                                </Link>
+                            </label>
                             {dashboard_link}
                             <button onClick={handleLogout} className="my-googleBtn bg-white">Log Out</button>
                             <img className='w-12 h-12 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
@@ -132,8 +145,9 @@ const Navbar = () => {
                                 <img className='w-16 h-16 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
                                 <p>{user?.displayName}</p>
                                 <button onClick={handleLogout} className=" my-googleBtn bg-white">Log Out</button>
+
                             </div>
-                                : <Link to='/login'>
+                                : <Link nClick={() => setMenuOpen(false)} to='/login'>
                                     <li className='text-gray-300 cursor-pointer  font-medium uppercase px-6 py-3 hover:bg-cyan-800  duration-300'>
                                         login
                                     </li>
@@ -145,6 +159,13 @@ const Navbar = () => {
                                     {navItem.name}
                                 </li>
                             </Link>)
+                        }
+                        {
+                            user && <Link onClick={() => setMenuOpen(false)} to='dashboard/selectedClass'>
+                                <li className='flex items-center gap-4 justify-between text-gray-300 cursor-pointer  font-medium uppercase px-6 py-3 hover:bg-cyan-800  duration-300'>
+                                    Bookmark <span>{seleteClass.length}</span>
+                                </li>
+                            </Link>
                         }
                     </ul>
                 }

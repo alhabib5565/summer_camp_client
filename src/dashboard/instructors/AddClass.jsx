@@ -27,21 +27,18 @@ const AddClass = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     const onSubmit = data => {
-        // const departureMoment = moment(departure_time, "YYYY-MM-DD HH:mm");
-        // const arrivalMoment = moment(arrival_time, "YYYY-MM-DD HH:mm");
-        // const duration = moment.duration(arrivalMoment.diff(departureMoment));
         if (QA.length < 1) {
             return toast.error('please add question and answer')
         }
         setLoading(true)
         console.log(data)
-        const { className, email, classType, instructorName, photo, price, sets, description, enrollEndDate, enrollStartDate } = data
+        const { className,  classType, photo, price, sets, description, enrollEndDate, enrollStartDate , duration} = data
         const savaClass = {
             className,
-            email: user.email,
+            instructorEmail: user.email,
             instructorName: user.displayName,
             instructorPhoto: user.photoURL,
-            photo,
+            classPhoto:photo,
             price,
             sets,
             description,
@@ -52,6 +49,7 @@ const AddClass = () => {
             whenAddClass: new Date(),
             category: selectedOption,
             classType,
+            duration,
             QA
         }
         console.log(savaClass)
@@ -71,8 +69,8 @@ const AddClass = () => {
                         'class added successfully',
                         'success'
                     )
-                    reset()
-                    setQA([])
+                    // reset()
+                    // setQA([])
                     setLoading(false)
                 }
             })
@@ -111,7 +109,7 @@ const AddClass = () => {
                     </label>
                     <input
                         type="url"
-                        {...register('photo')} placeholder='class image'
+                        {...register('photo', { required: true })} placeholder='class image'
                         className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md "
                     />
                 </div>
@@ -131,7 +129,7 @@ const AddClass = () => {
                         </label>
                         <select
                             className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md"
-                            {...register("duration")}
+                            {...register("duration", { required: true })}
                         >
                             {durations.map((option, index) => (
                                 <option key={index} value={option}>
@@ -147,7 +145,7 @@ const AddClass = () => {
                         </label>
                         <select
                             className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md"
-                            {...register("classType")}
+                            {...register("classType", { required: true })}
                         >
                             <option value='Online'> Online</option>
                             <option value="Offline"> Offline</option>
@@ -162,7 +160,7 @@ const AddClass = () => {
                         </label>
                         <input
                             type="number"
-                            {...register('price')} placeholder='price'
+                            {...register('price', { required: true })} placeholder='price'
                             className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md "
                         />
                     </div>
@@ -173,7 +171,7 @@ const AddClass = () => {
                         </label>
                         <input
                             type="number"
-                            {...register('sets')} placeholder='sets'
+                            {...register('sets', { required: true })} placeholder='sets'
                             className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md "
                         />
                     </div>
@@ -186,7 +184,7 @@ const AddClass = () => {
                         </label>
                         <input
                             type="date"
-                            {...register('enrollStartDate')} placeholder='Enroll start date'
+                            {...register('enrollStartDate', { required: true })} placeholder='Enroll start date'
                             className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md "
                         />
                     </div>
@@ -197,7 +195,7 @@ const AddClass = () => {
                         </label>
                         <input
                             type="date"
-                            {...register('enrollEndDate')} placeholder='Enroll end date'
+                            {...register('enrollEndDate', { required: true })} placeholder='Enroll end date'
                             className="w-full  px-1 sm:px-2 md:px-3 py-1 bg-[#F3F4F6] text-gray-800 border-2  focus:outline-gray-400  rounded-md "
                         />
                     </div>

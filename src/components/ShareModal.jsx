@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 // import LoadingButton from "../Button/LoadingButton";
 
-const ShareModal = ({ isOpen, setIsOpen, children, title }) => {
+const ShareModal = ({ isOpen, setIsOpen, children, title, width }) => {
     const closeModal = () => {
         setIsOpen(false);
     };
@@ -19,7 +19,7 @@ const ShareModal = ({ isOpen, setIsOpen, children, title }) => {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-black bg-opacity-50" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
@@ -33,10 +33,10 @@ const ShareModal = ({ isOpen, setIsOpen, children, title }) => {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className={`w-full ${width ? width : 'max-w-lg'}  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}>
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
+                                        className="text-lg font-medium leading-6 text-gray-900 mb-4"
                                     >
                                         {title}
                                     </Dialog.Title>

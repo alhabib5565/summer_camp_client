@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import { HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight } from 'react-icons/hi'
+import { Link } from 'react-router-dom';
 const Banner = () => {
     const slideImage = [
         {
@@ -14,11 +15,11 @@ const Banner = () => {
             title: 'Education is the backbone of a nation',
             subTitle: 'wellcome to online organization'
         },
-        { 
+        {
             url: "https://i.ibb.co/rdw68jp/education-banner-1.jpg",
             title: 'Education is the best key success in your life',
             subTitle: 'wellcome to online education'
-         },
+        },
     ]
 
     const [currentImage, setCurrentImage] = useState(0)
@@ -56,11 +57,13 @@ const Banner = () => {
                             {slideImage[currentImage].subTitle}
                         </h3>
                         <h2 className="text-2xl text-gray-300 md:text-5xl lg:text-6xl leading-10 font-bold">
-                        {slideImage[currentImage].title}
+                            {slideImage[currentImage].title}
                         </h2>
-                        <button className=" border-[3px] border-white  mx-auto hover:bg-yellow-500 text-lg text-gray-100 font-bold py-2 px-6 rounded-full transition duration-300 ">
-                            our classes
-                        </button>
+                        <p>
+                            <Link to='/allClass' className=" border-[3px] border-white  mx-auto hover:bg-yellow-500 text-lg text-gray-100 font-bold py-2 px-6 rounded-full transition duration-300 ">
+                                our classes
+                            </Link>
+                        </p>
                     </div>
                 </div>
 

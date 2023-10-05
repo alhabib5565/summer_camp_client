@@ -10,7 +10,6 @@ import Payment from "../dashboard/user/Payment";
 import EnroledClass from "../dashboard/user/EnroledClass";
 import AdminHome from "../dashboard/admin/AdminHome";
 import ManageUser from "../dashboard/admin/ManageUser";
-import ManageClass from "../dashboard/admin/manageClass";
 import AddClass from "../dashboard/instructors/AddClass";
 import MyClass from "../dashboard/instructors/MyClass";
 import UpdateClass from "../components/UpdateClass";
@@ -18,6 +17,8 @@ import Instructors from "../pages/allinstructor/Instructors";
 import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
 import Classes from "../pages/AllClass/Classes";
+import ManageClass from "../dashboard/admin/ManageClass";
+import ClassDetails from "../pages/AllClass/ClassDetails";
 
 
 export const routes = createBrowserRouter([
@@ -30,6 +31,7 @@ export const routes = createBrowserRouter([
             { path: '/register', element: <Register></Register> },
             {path: '/instructor', element: <Instructors></Instructors>},
             {path: 'allClass', element: <Classes></Classes>},
+            {path: 'class/:id', element: <ClassDetails/>}
         ]
     },
     {
