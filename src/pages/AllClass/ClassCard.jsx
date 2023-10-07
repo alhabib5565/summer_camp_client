@@ -3,19 +3,25 @@ import React, { useContext } from 'react';
 import { CgCalendarDates } from 'react-icons/cg';
 import { FcBusinessman } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
-import { handleBookmark } from '../../utils/utils';
+import { handleBookmark, remainingDays } from '../../utils/utils';
 import { AuthContext } from '../../provider/AuthProvider';
 import useSelectClass from '../../hooks/useSelectClass';
+import useAdmin from '../../hooks/useAdmin';
+import useInstructor from '../../hooks/useInstructor';
 
 const ClassCard = ({ clss }) => {
+    // console.log(clss)
     const { user } = useContext(AuthContext)
     const [, refetch] = useSelectClass()
+    const [isAdmin] = useAdmin()
+    const [isInstructor] = useInstructor()
+
     const addBookmark = (clss) => {
-        handleBookmark(clss, user)
-        refetch()
+        handleBookmark(clss, user, refetch)
     }
+
     return (
-        <div className="max-w-lg w-full h-full mx-auto hover:shadow-xl shadow-cyan-500 duration-200">
+        <div className="max-w-lg w-full h-full mx-auto hover:shadow-xl shadow-cyan-500 duration-200 relative">
             <img className='h-48 w-full' src={clss.classPhoto} alt="" />
             <div className="border border-gray-400 bg-white rounded-b flex flex-col justify-between leading-normal">
                 <div className='p-2 md:p-4'>
@@ -37,6 +43,7 @@ const ClassCard = ({ clss }) => {
                         </div>
                     }
 
+
                     <div className='flex flex-col md:flex-row md:items-center gap-0 md:gap-8'>
                         <p className='text-lg font-medium'> category: {clss?.category?.value}</p>
                         <p className='text-lg font-medium'> sets: {clss.sets}</p>
@@ -53,9 +60,12 @@ const ClassCard = ({ clss }) => {
                     <p>
                         <Link to={`/class/${clss._id}`} className="w-fit px-4 py-2 mx-auto font-medium rounded border-2 border-cyan-500 hover:bg-cyan-600 hover:text-white duration-300 text-cyan-400">View Details</Link>
                     </p>
-                    <svg onClick={() => addBookmark(clss)} className="h-12 w-12 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinejoin="round" strokeWidth="1" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                    </svg>
+                    {
+                        remainingDays(clss.enrollStartDate, clss.enrollEndDate) >= 1 && !isAdmin && !isInstructor && <svg onClick={() => addBookmark(clss)} className='w-12 h-12 cursor-pointer absolute top-2 right-4 text-white hover:text-cyan-400 duration-300' fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinejoin="round" strokeWidth="1" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                    }
+
                 </div>
             </div>
         </div>

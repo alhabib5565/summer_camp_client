@@ -11,19 +11,19 @@ const Classes = () => {
     const [lengthOfApproveClass, setLengthOfApproveClass] = useState(0)
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/approveClass?currentPage=${currentPage}&itemsPerPage=${itemsPerPage}`)
+        axios.get(`https://assignmenttwelv.vercel.app/approveClass?currentPage=${currentPage}&itemsPerPage=${itemsPerPage}`)
             .then(data => setClasses(data.data))
     }, [currentPage, itemsPerPage])
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/approveClassNumber`)
+        axios.get(`https://assignmenttwelv.vercel.app/approveClassNumber`)
             .then(data => setLengthOfApproveClass(data.data.totalApproveClass))
     }, [])
 
     const totalPage = Math.ceil(lengthOfApproveClass / itemsPerPage)
 
     const pageNumbers = [...Array(totalPage).keys()]
-    const options = [2, 4, 6]
+    const options = [3, 4, 6]
     const handleSelectChange = (event) => {
         setItemsPerPage(event.target.value)
         setCurrentPage(0)
@@ -41,11 +41,11 @@ const Classes = () => {
     return (
         <div className='pt-20  max-w-[1440px] px-2 md:px-6 lg:px-10 mx-auto mb-20'>
             <Helmet>
-                <title>sport camp || classes</title>
+                <title>E_Class || classes</title>
             </Helmet>
             {
                 classes.length < 1 ? <Loader></Loader> : <>
-                    <h2 className='text-2xl uppercase text-center md:text-4xl text-yellow-950 font-bold mt-8 '>Our totall class {classes?.length}</h2>
+                    <h2 className='text-2xl uppercase text-center md:text-4xl text-yellow-950 font-bold mt-8 '>Our totall class {lengthOfApproveClass}</h2>
 
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 xl:grid-cols-3 mt-10'>
                         {

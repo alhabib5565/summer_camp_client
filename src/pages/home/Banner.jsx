@@ -46,7 +46,7 @@ const Banner = () => {
     return (
         <div className='w-full  min-h-[calc(100vh-100px)] h-screen relative group pt-20'>
             <Helmet>
-                <title>sport camp || home</title>
+                <title>E_Class || Home - page</title>
             </Helmet>
             <div
                 className='w-full h-full bg-cover bg-center duration-500'

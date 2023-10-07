@@ -15,7 +15,7 @@ const MyClass = () => {
         queryKey: ['class', user?.email],
         enabled: !loading,
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/class/${user?.email}`, {
+            const res = await fetch(`https://assignmenttwelv.vercel.app/class/${user?.email}`, {
                 headers: {
                     authrization: `bearer ${token}`
                 }
@@ -34,7 +34,7 @@ const MyClass = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/removeClas/${id}`, {
+                fetch(`https://assignmenttwelv.vercel.app/removeClas/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -55,16 +55,16 @@ const MyClass = () => {
     }
     console.log(classes)
     return (
-        <div className='max-w-3xl mx-auto mt-12'>
+        <div className=' mx-auto mt-12'>
             <Helmet>
-                <title>sport camp || my class</title>
+                <title>E_Class || Your - class</title>
             </Helmet>
             {
                 classes.length < 1 ?
                     <NoData link={'/dashboard/addClass'} linkName={'Add Now'} subTitle='Please add clsss' title='You have no class'></NoData>
                     : <>
                         <h2 className='text-2xl font-medium'>Hi! <span className='text-cyan-500 font-bold'>{user?.displayName}</span></h2>
-                        <div>
+                        <div className='grid grid-cols-1 xl:grid-cols-2 gap-6'>
                             {
                                 classes.map(clas => <div key={clas._id} className="relative mb-4 flex flex-col w-full max-w-[48rem] md:flex-row rounded-xl bg-gray-100 bg-clip-border text-gray-700 shadow-md">
                                     <div className="relative m-0 w-full md:w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
@@ -93,8 +93,8 @@ const MyClass = () => {
                                         <div className='flex items-center justify-end w-full gap-4 '>
                                             <Link to={`/dashboard/updateClass/${clas._id}`}>
                                                 <button className="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                     </svg>
                                                     Edit
                                                 </button>
@@ -102,7 +102,7 @@ const MyClass = () => {
 
                                             <button onClick={() => handleDelete(clas._id)} className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                                 Delete
                                             </button>

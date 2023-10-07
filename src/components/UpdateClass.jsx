@@ -18,7 +18,7 @@ const UpdateClass = () => {
         const { className, classPhoto, price, sets, duration, enrollEndDate, enrollStartDate, classType, } = data
         const updateClas = { className, classPhoto, price, sets, duration, enrollEndDate, enrollStartDate, classType }
 console.log(updateClas)
-        fetch(`http://localhost:5000/updateClas/${id}`, {
+        fetch(`https://assignmenttwelv.vercel.app/updateClas/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -17,11 +17,17 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css';
 import { handleBookmark, remainingDays } from '../../utils/utils';
 import { AuthContext } from '../../provider/AuthProvider';
+import { Helmet } from 'react-helmet-async';
+import useAdmin from '../../hooks/useAdmin';
+import useInstructor from '../../hooks/useInstructor';
 
 const ClassDetails = () => {
     const { id } = useParams()
     const [classDetails, setClassDetail] = useState({})
-    const {user} = useContext(AuthContext)
+    const [isAdmin] = useAdmin()
+    const [isInstructor] = useInstructor()
+
+    const { user } = useContext(AuthContext)
     useEffect(() => {
         if (id) {
             axios(`${import.meta.env.VITE_API_URL}/classDetails/${id}`)
@@ -31,6 +37,11 @@ const ClassDetails = () => {
 
     return (
         <div className='w-full max-w-5xl mx-auto px-2 md-px-6 lg:px-10 pt-20'>
+            <Helmet>
+                <title>
+                    E_Class || Class details
+                </title>
+            </Helmet>
             <div className="mt-20 mb-10 flex flex-col md:flex-row gap-6 border border-gray-400 p-2 md:p-4">
                 <div className=' w-full md:w-1/2 flex flex-col justify-between'>
                     <img className='h-5/ w-full mb-4 grow' src={classDetails.classPhoto} alt="" />
@@ -76,29 +87,32 @@ const ClassDetails = () => {
                         </p>
                     </div>
                     <p className='text-gray-700 text-base'>{classDetails.description} </p>
-                    <button
-                    onClick={() => handleBookmark(classDetails, user)}
-                        className="mt-2 flex select-none items-center gap-3 rounded-lg bg-cyan-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-cyan-500/20 transition-all hover:shadow-lg hover:shadow-cyan-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        type="button"
-                        data-ripple-light="true"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                            className="h-5 w-5"
+                    {
+                        remainingDays(classDetails.enrollStartDate, classDetails.enrollEndDate) >= 1 &&!isAdmin && !isInstructor && <button
+                            onClick={() => handleBookmark(classDetails, user)}
+                            className="mt-2 flex select-none items-center gap-3 rounded-lg bg-cyan-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-cyan-500/20 transition-all hover:shadow-lg hover:shadow-cyan-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="button"
+                            data-ripple-light="true"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                            ></path>
-                        </svg>
-                        Add to Bookmark
-                    </button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2"
+                                stroke="currentColor"
+                                aria-hidden="true"
+                                className="h-5 w-5"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                                ></path>
+                            </svg>
+                            Add to Bookmark
+                        </button>
+                    }
+
 
                 </div>
             </div>

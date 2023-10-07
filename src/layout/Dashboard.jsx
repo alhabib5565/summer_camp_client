@@ -13,41 +13,8 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   return (
     <>
-
-      {/* <div className="drawer lg:drawer-open">
-        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
-          Page content here
-          <label htmlFor="my-drawer-2" className="btn text-lg drawer-button lg:hidden"><HiOutlineMenuAlt1></HiOutlineMenuAlt1></label>
-          <Outlet></Outlet>
-        </div>
-        <div className="drawer-side overflow-y-auto">
-          <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-cyan-800 text-lg text-white">
-            Sidebar content here
-            {
-              !isAdmin && !isInstructor && <><p className='text-2xl font-bold text-white'>user</p> <UserNavItem></UserNavItem></>
-            }
-            {
-              isAdmin && <><p className='text-2xl font-bold text-white'>admin</p> <AdminNavItem></AdminNavItem></>
-            }
-            {
-              isInstructor && <><p className='text-2xl font-bold text-white'>instructor</p> <InstcNavItem></InstcNavItem></>}
-            <div className='divider'></div>
-
-            <li>
-              <NavLink to='/' className={({ isActive }) => isActive ? "text-slate-300" : ""}>
-                <FaHome></FaHome> Home
-              </NavLink>
-            </li>
-
-          </ul>
-
-        </div>
-      </div> */}
-
       <div className='flex'>
-        <div className='w-72 bg-cyan-800 overflow-y-auto fixed h-full min-h-screen hidden lg:block z-10'>
+        <div className='w-72 duration-500 bg-cyan-800 overflow-y-auto fixed h-full min-h-screen hidden lg:block z-10'>
           <ul className='mt-10 flex flex-col gap-2'>
             {
               !isAdmin && !isInstructor && <><p className='text-2xl font-bold text-white'>user</p> <UserNavItem></UserNavItem></>
@@ -82,20 +49,20 @@ const Dashboard = () => {
             </li>
           </ul>
         </div>
-        <div onClick={() => setSidebarOpen(!sidebarOpen)} className={`${sidebarOpen && 'ml-72'} mt-5 fixed w-10 h-10 flex justify-center items-center rounded-full cursor-pointer lg:hidden bg-cyan-800 text-gray-300`}>
+        <div onClick={() => setSidebarOpen(!sidebarOpen)} className={`${sidebarOpen && 'ml-[282px]'} mt-5 z-10 ml-2 fixed w-10 h-10 flex justify-center items-center rounded-full cursor-pointer lg:hidden bg-cyan-800 text-gray-300`}>
           <IoIosArrowForward className={`${sidebarOpen ? 'rotate-180 duration-300' : ''}`} />
         </div>
         {
           sidebarOpen && <div className='w-72 duration-500 bg-cyan-800 overflow-y-auto fixed h-full min-h-screen lg:hidden z-10'>
             <ul className='mt-10 flex flex-col gap-2'>
               {
-                !isAdmin && !isInstructor && <><p className='text-2xl font-bold text-white'>user</p> <UserNavItem></UserNavItem></>
+                !isAdmin && !isInstructor && <UserNavItem></UserNavItem>
               }
               {
-                isAdmin && <><p className='text-2xl font-bold text-white'>admin</p> <AdminNavItem></AdminNavItem></>
+                isAdmin && <AdminNavItem></AdminNavItem>
               }
               {
-                isInstructor && <><p className='text-2xl font-bold text-white'>instructor</p> <InstcNavItem></InstcNavItem></>
+                isInstructor && <InstcNavItem></InstcNavItem>
               }
               <div className='divider'></div>
               <li className='w-full flex'>
@@ -123,7 +90,7 @@ const Dashboard = () => {
           </div>
         }
         <div className='w-full flex-1 lg:ml-72'>
-          <div className='px-2 md:px-4'>
+          <div className='px-1 md:px-2'>
             <Outlet></Outlet>
           </div>
         </div>

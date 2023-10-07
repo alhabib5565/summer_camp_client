@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import Classes from "../pages/AllClass/Classes";
 import ManageClass from "../dashboard/admin/ManageClass";
 import ClassDetails from "../pages/AllClass/ClassDetails";
+import TotalEnrolled from "../dashboard/admin/TotalEnrolled";
 
 
 export const routes = createBrowserRouter([
@@ -47,6 +48,7 @@ export const routes = createBrowserRouter([
             {path: 'adminHome', element: <AdminRoute><AdminHome></AdminHome></AdminRoute>},
             {path: 'manageUser', element: <AdminRoute> <ManageUser></ManageUser></AdminRoute>},
             {path: 'manageClass', element: <AdminRoute><ManageClass></ManageClass></AdminRoute>},
+            {path: 'totalEnrolledClass', element: <AdminRoute><TotalEnrolled></TotalEnrolled> </AdminRoute>},
             //instructors related route
             {path: 'addClass', element: <AddClass></AddClass>},
             {path: 'myClass', element: <InstructorRoute><MyClass></MyClass></InstructorRoute>},

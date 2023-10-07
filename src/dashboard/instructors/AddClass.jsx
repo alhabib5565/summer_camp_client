@@ -32,13 +32,13 @@ const AddClass = () => {
         }
         setLoading(true)
         console.log(data)
-        const { className,  classType, photo, price, sets, description, enrollEndDate, enrollStartDate , duration} = data
+        const { className, classType, photo, price, sets, description, enrollEndDate, enrollStartDate, duration } = data
         const savaClass = {
             className,
             instructorEmail: user.email,
             instructorName: user.displayName,
             instructorPhoto: user.photoURL,
-            classPhoto:photo,
+            classPhoto: photo,
             price,
             sets,
             description,
@@ -53,7 +53,7 @@ const AddClass = () => {
             QA
         }
         console.log(savaClass)
-        fetch('http://localhost:5000/saveClass', {
+        fetch('https://assignmenttwelv.vercel.app/saveClass', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -91,7 +91,7 @@ const AddClass = () => {
     ];
     return (
         <div className='bg-[#F3F4F6] py-10 w-full h-full flex justify-center items-center'>
-
+            <ToastContainer />
             <form className='space-y-4 max-w-4xl w-full  bg-white p-2 md:p-6 lg:p-10' onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label htmlFor="clasName" className="block mb-1  font-bold text-gray-600">
@@ -257,7 +257,6 @@ const AddClass = () => {
                             Add A Class
                         </button>
                 }
-
             </form>
             <AddClassQ_A QA={QA} setQA={setQA} isOpen={isOpen} setIsOpen={setIsOpen}></AddClassQ_A>
         </div>

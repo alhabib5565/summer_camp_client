@@ -16,7 +16,6 @@ const CheckoutForm = ({ closeModal, classData }) => {
     const [err, setErr] = useState('')
     const [paymentSecret, setPaymentSecret] = useState('')
     const { user } = useContext(AuthContext)
-    console.log('class data', classData)
 
     useEffect(() => {
         const price = classData?.price

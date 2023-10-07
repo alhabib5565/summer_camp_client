@@ -23,7 +23,6 @@ const AdminRoute = ({ children }) => {
         />;
     </div>
     }
-console.log(isAdmin)
     if (user && isAdmin) {
         return children;
     }

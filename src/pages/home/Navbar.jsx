@@ -7,12 +7,12 @@ import useInstructor from '../../hooks/useInstructor';
 //new import
 import { FaBars, FaTimes } from 'react-icons/fa'
 import useSelectClass from '../../hooks/useSelectClass';
-
+import logo from'../../assets/E_Class_logo.png'
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
-    const [seleteClass, refetch, isLoading] = useSelectClass()
+    const [seleteClass] = useSelectClass()
     const handleLogout = () => {
         logoutUser()
             .then(() => {
@@ -41,7 +41,7 @@ const Navbar = () => {
         { id: 3, name: 'all Class', linkName: '/allClass' },
     ]
 
-    const dashboard_link = <>
+const dashboard_link = <>
         {
             isAdmin
                 ? <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
@@ -67,7 +67,7 @@ const Navbar = () => {
                     </span>
                     : <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
                         <NavLink
-                            to='/dashboard/userHome'
+                            to='/dashboard/selectedClass'
                             className={({ isActive }) =>
                                 isActive ? "text-yellow-300" : ""
                             }
@@ -83,7 +83,9 @@ const Navbar = () => {
         <div className='bg-cyan-950 fixed z-50 h-20 w-full border-b-[1px] hover:shadow-xl border-gray-300 shadow-lg'>
             <div className='max-w-[1440px] px-3 md-px-6 lg:px-10 mx-auto h-full flex justify-between items-center text-white'>
                 <Link to='/'>
-                    <h2 className='text-2xl lg:text-4xl font-signature font-bold'>E Class</h2>
+                    {/* <h2 className='text-2xl lg:text-4xl font-signature font-bold'>E Class</h2>
+                     */}
+                    <img className='w-[150px] h-full' src={logo} alt="" />
                 </Link>
 
 
@@ -105,17 +107,21 @@ const Navbar = () => {
                 {
                     user
                         ? <div className='hidden md:flex gap-3 items-center'>
-                            <label tabIndex={0} className="btn btn-ghost btn-circle">
-                                <Link to='dashboard/selectedClass' className="indicator">
-                                    <svg className="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinejoin="round" strokeWidth="1" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                                    </svg>
-                                    {
-                                        seleteClass.length > 0 ? <span className="badge badge-sm indicator-item">{seleteClass.length}</span>
-                                            : <span className="badge badge-sm indicator-item">0</span>
-                                    }
-                                </Link>
-                            </label>
+                            {
+                                !isAdmin && !isInstructor &&
+                                <label tabIndex={0} className="btn btn-ghost btn-circle">
+                                    <Link to='dashboard/selectedClass' className="indicator">
+                                        <svg className="h-5 w-5 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinejoin="round" strokeWidth="1" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                        </svg>
+
+                                        {
+                                            seleteClass.length > 0 ? <span className="badge badge-sm indicator-item">{seleteClass.length}</span>
+                                                : <span className="badge badge-sm indicator-item">0</span>
+                                        }
+                                    </Link>
+                                </label>
+                            }
                             {dashboard_link}
                             <button onClick={handleLogout} className="my-googleBtn bg-white">Log Out</button>
                             <img className='w-12 h-12 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
@@ -161,7 +167,7 @@ const Navbar = () => {
                             </Link>)
                         }
                         {
-                            user && <Link onClick={() => setMenuOpen(false)} to='dashboard/selectedClass'>
+                            user && !isAdmin && !isInstructor && <Link onClick={() => setMenuOpen(false)} to='dashboard/selectedClass'>
                                 <li className='flex items-center gap-4 justify-between text-gray-300 cursor-pointer  font-medium uppercase px-6 py-3 hover:bg-cyan-800  duration-300'>
                                     Bookmark <span>{seleteClass.length}</span>
                                 </li>

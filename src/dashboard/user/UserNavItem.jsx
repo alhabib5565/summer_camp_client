@@ -9,16 +9,6 @@ const UserNavItem = () => {
         <>
             <li className='w-full flex'>
                 <NavLink
-                    to='/dashboard/userHome'
-                    className={({ isActive }) => isActive
-                        ? "text-white bg-cyan-950 w-full transition-all duration-300 ease-in-out px-4 py-2 flex items-center gap-4"
-                        : "w-full hover:bg-cyan-950 text-white transition-all duration-300 ease-in-out px-4 py-2 flex items-center gap-4"}
-                >
-                    <FaHome size={20} /> <span>User Home</span>
-                </NavLink>
-            </li>
-            <li className='w-full flex'>
-                <NavLink
                     to='/dashboard/selectedClass'
                     className={({ isActive }) => isActive
                         ? "text-white bg-cyan-950 w-full transition-all duration-300 ease-in-out px-4 py-2 flex items-center gap-4"
@@ -27,14 +17,15 @@ const UserNavItem = () => {
                     <HiOutlineBadgeCheck size={20} /> <span>Selected Class</span>
                 </NavLink>
             </li>
+       
             <li className='w-full flex'>
                 <NavLink
-                    to='/dashboard/selectedClass'
+                    to='/dashboard/enrolled'
                     className={({ isActive }) => isActive
                         ? "text-white bg-cyan-950 w-full transition-all duration-300 ease-in-out px-4 py-2 flex items-center gap-4"
                         : "w-full hover:bg-cyan-950 text-white transition-all duration-300 ease-in-out px-4 py-2 flex items-center gap-4"}
                 >
-                    <FiShield size={20} /> <span>Selected Class</span>
+                    <FiShield size={20} /> <span>Enrolled Classes</span>
                 </NavLink>
             </li>
         </>

@@ -8,7 +8,7 @@ import { BsArrowRight } from 'react-icons/bs';
 const PopularClass = () => {
     const [popularClasses, setPopularClasses] = useState([])
     useEffect(() => {
-        fetch('http://localhost:5000/popularCls')
+        fetch('https://assignmenttwelv.vercel.app/popularCls')
             .then(res => res.json())
             .then(data => setPopularClasses(data))
     }, [])

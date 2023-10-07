@@ -5,24 +5,18 @@ import { BiLoaderCircle } from 'react-icons/bi'
 import { CgCalendarDates } from "react-icons/cg"
 import moment from 'moment';
 import AdminShowClass from './AdminShowClass';
-import useSelectClass from '../../hooks/useSelectClass';
 import DenyFeedback from './DenyFeedback';
+import useAllClass from '../../hooks/useApproveClass';
 
 const ManageClass = () => {
-    const [feedback, setFeedback] = useState('')
-    const [, refetch] = useSelectClass()
-    const [classes, setClasses] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     const [denyFeedbackModalOpen, setDenyFeedbackModalOpen] = useState(false)
     const [id, setId] = useState('')
-    useEffect(() => {
-        fetch('http://localhost:5000/allClass')
-            .then(res => res.json())
-            .then(data => setClasses(data))
-    }, [])
+    const [classes, , refetch] = useAllClass()
+
 
     const appvoeClass = (clss) => {
-        fetch(`http://localhost:5000/class/approve/${clss._id}`, {
+        fetch(`https://assignmenttwelv.vercel.app/class/approve/${clss._id}`, {
             method: 'PATCH',
             headers: {
                 "content-type": 'application/json'
@@ -53,7 +47,7 @@ const ManageClass = () => {
             <h2 className=' text-2xl md:text-4xl text-gray-950 font-bold mb-5'>Our totall class {classes?.length}</h2>
             <ToastContainer></ToastContainer>
             <Helmet>
-                <title>sport camp || manage class</title>
+                <title>E_Class || Manage - Class by admin</title>
             </Helmet>
 
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
