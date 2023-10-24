@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from '../../components/GoogleLogin';
@@ -11,7 +11,7 @@ const Login = () => {
     const location = useLocation()
     let from = location.state?.from?.pathname || "/";
     const { loginUser } = useContext(AuthContext)
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false)
     const onSubmit = data => {
         setLoading(true)
@@ -95,7 +95,7 @@ const Login = () => {
                         }
                         <GoogleLogin></GoogleLogin>
                         <Link to='/register' className="mt-6 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
-                            Don't have an account?
+                            Do not have an account?
                             <span
                                 className="ml-1 block font-sans text-sm font-bold leading-normal text-cyan-500 antialiased"
                                 >

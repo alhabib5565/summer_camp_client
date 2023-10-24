@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+// import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
@@ -7,7 +8,7 @@ import useInstructor from '../../hooks/useInstructor';
 //new import
 import { FaBars, FaTimes } from 'react-icons/fa'
 import useSelectClass from '../../hooks/useSelectClass';
-import logo from'../../assets/E_Class_logo.png'
+import logo from '../../assets/E_Class_logo.png'
 const Navbar = () => {
     const { logoutUser, user } = useContext(AuthContext)
     const [isAdmin] = useAdmin()
@@ -41,14 +42,14 @@ const Navbar = () => {
         { id: 3, name: 'all Class', linkName: '/allClass' },
     ]
 
-const dashboard_link = <>
+    const dashboard_link = <>
         {
             isAdmin
                 ? <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
                     <NavLink
                         to='/dashboard/adminHome'
                         className={({ isActive }) =>
-                            isActive ? "text-yellow-300" : ""
+                            isActive ? "text-cyan-300" : ""
                         }
                     >
                         dashboard
@@ -59,7 +60,7 @@ const dashboard_link = <>
                         <NavLink
                             to='/dashboard/myClass'
                             className={({ isActive }) =>
-                                isActive ? "text-yellow-300" : ""
+                                isActive ? "text-cyan-300" : ""
                             }
                         >
                             dashboard
@@ -69,7 +70,7 @@ const dashboard_link = <>
                         <NavLink
                             to='/dashboard/selectedClass'
                             className={({ isActive }) =>
-                                isActive ? "text-yellow-300" : ""
+                                isActive ? "text-cyan-300" : ""
                             }
                         >
                             dashboard
@@ -95,7 +96,7 @@ const dashboard_link = <>
                             <NavLink
                                 to={navItem.linkName}
                                 className={({ isActive }) =>
-                                    isActive ? "text-yellow-300" : ""
+                                    isActive ? "text-cyan-400" : ""
                                 }
                             >
                                 {navItem.name}
@@ -124,13 +125,13 @@ const dashboard_link = <>
                             }
                             {dashboard_link}
                             <button onClick={handleLogout} className="my-googleBtn bg-white">Log Out</button>
-                            <img className='w-12 h-12 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
+                            <img className='w-12 h-12 rounded-full border-2 border-cyan-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
                         </div>
                         : <span className='text-gray-300 cursor-pointer  font-medium uppercase hover:text-white hover:scale-105 duration-300'>
                             <NavLink
                                 to='/login'
                                 className={({ isActive }) =>
-                                    isActive ? "text-yellow-300" : ""
+                                    isActive ? "text-cyan-300" : ""
                                 }
                             >
                                 login
@@ -148,10 +149,10 @@ const dashboard_link = <>
                     menuOpen && <ul className='absolute top-20 box-border bg-cyan-950 w-full md:w-[50vw] rounded-xl py-6 right-0'>
                         {
                             user ? <div className='flex px-6 mb-3 flex-col gap-3 items-center'>
-                                <img className='w-16 h-16 rounded-full border-2 border-yellow-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
+                                <img className='w-16 h-16 rounded-full border-2 border-cyan-300 p-[1px]' src={`${user?.photoURL}`} alt="" />
                                 <p>{user?.displayName}</p>
                                 <button onClick={handleLogout} className=" my-googleBtn bg-white">Log Out</button>
-
+                                {dashboard_link}
                             </div>
                                 : <Link nClick={() => setMenuOpen(false)} to='/login'>
                                     <li className='text-gray-300 cursor-pointer  font-medium uppercase px-6 py-3 hover:bg-cyan-800  duration-300'>
@@ -172,6 +173,9 @@ const dashboard_link = <>
                                     Bookmark <span>{seleteClass.length}</span>
                                 </li>
                             </Link>
+                        }
+                        {
+                            user && <p className='px-6'>{dashboard_link}</p>
                         }
                     </ul>
                 }

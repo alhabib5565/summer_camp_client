@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 
 const AddClass = () => {
     const { user } = useContext(AuthContext)
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, } = useForm();
     const [loading, setLoading] = useState(false)
     const [selectedOption, setSelectedOption] = useState(null);
     // question modal 
@@ -84,10 +84,10 @@ const AddClass = () => {
     const category = [
         { value: 'Language Learning', label: 'Language Learning' },
         { value: 'Programming', label: 'Programming' },
-        { value: 'Math & Logic', label: 'Math & Logic' },
+        { value: 'Math and Logic', label: 'Math and Logic' },
         { value: 'Computer Science', label: 'Computer Science' },
         { value: 'Business', label: 'Business' },
-        { value: 'Arts & Humanities', label: 'Arts & Humanities' },
+        { value: 'Arts and Humanities', label: 'Arts and Humanities' },
     ];
     return (
         <div className='bg-[#F3F4F6] py-10 w-full h-full flex justify-center items-center'>

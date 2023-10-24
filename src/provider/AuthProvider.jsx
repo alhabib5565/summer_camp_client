@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
 
+            setUser(currentUser)
             if (currentUser) {
                 fetch('https://assignmenttwelv.vercel.app/ganarate_jwt', {
                     method: 'POST',
@@ -49,7 +50,6 @@ const AuthProvider = ({ children }) => {
                     .then(res => res.json())
                     .then(data => {
                         localStorage.setItem('jwt_token', data?.token)
-                        setUser(currentUser)
                         setLoding(false)
                     })
             }
